@@ -3,8 +3,12 @@ import io
 
 import attrs
 import click
+import structlog
 
+from wanikani_burnt_kanji_to_anki.wanikani import UnknownKanjiError
 from wanikani_burnt_kanji_to_anki.wanikani import WaniKaniAPIClient
+
+log = structlog.get_logger()
 
 
 @attrs.frozen
@@ -48,13 +52,18 @@ def csv(
 
     if additional_kanji is not None:
         for line in additional_kanji:
-            kanji = ctx.obj.api.get_kanji(line.strip())
-            row = (
-                kanji.characters,
-                ", ".join(kanji.meanings),
-                ", ".join(kanji.readings),
-            )
-            writer.writerow(row)
+            try:
+                kanji = ctx.obj.api.get_kanji(line.strip())
+            except UnknownKanjiError:
+                log.error("Unknown kanji", kanji=line.strip())
+                continue
+            else:
+                row = (
+                    kanji.characters,
+                    ", ".join(kanji.meanings),
+                    ", ".join(kanji.readings),
+                )
+                writer.writerow(row)
 
 
 if __name__ == "__main__":
