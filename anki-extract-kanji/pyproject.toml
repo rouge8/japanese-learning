@@ -11,6 +11,14 @@ classifiers = [
 ]
 dynamic = ["version", "description"]
 requires-python = "~=3.14.0"
+dependencies = [
+    "anki~=25.9.2",
+    "click~=8.3.0",
+]
+
+[project.scripts]
+anki-extract-kanji = "anki_extract_kanji.__main__:main"
+
 
 [project.urls]
 Home = "https://github.com/rouge8/anki-extract-kanji"
