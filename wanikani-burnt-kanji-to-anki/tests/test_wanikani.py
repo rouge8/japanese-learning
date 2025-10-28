@@ -5,6 +5,7 @@ from pytest_httpx import HTTPXMock
 
 from wanikani_burnt_kanji_to_anki.wanikani import _KANJI
 from wanikani_burnt_kanji_to_anki.wanikani import Kanji
+from wanikani_burnt_kanji_to_anki.wanikani import UnknownKanjiError
 from wanikani_burnt_kanji_to_anki.wanikani import WaniKaniAPIClient
 
 from .factories import KanjiFactory
@@ -142,3 +143,9 @@ class TestWaniKaniAPIClient:
 
         for kanji in random_kanji:
             assert api_client.get_kanji(kanji.characters) == kanji
+
+    def test_get_kanji_unknown_kanji(self, api_client: WaniKaniAPIClient) -> None:
+        random_kanji = KanjiFactory.create()
+
+        with pytest.raises(UnknownKanjiError):
+            api_client.get_kanji(random_kanji.characters + "OHNO")

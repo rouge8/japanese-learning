@@ -9,6 +9,11 @@ import structlog
 log = structlog.get_logger()
 
 
+@attrs.define
+class UnknownKanjiError(Exception):
+    kanji: str
+
+
 @attrs.frozen
 class Kanji:
     id: int
@@ -113,6 +118,9 @@ class WaniKaniAPIClient:
         Must be called after loading the Kanji data into memory with
         :meth:`~.load_kanji`.
         """
-        return next(  # pragma: no branch
-            k for k in _KANJI.values() if k.characters == kanji
-        )
+        try:
+            return next(  # pragma: no branch
+                k for k in _KANJI.values() if k.characters == kanji
+            )
+        except StopIteration as err:
+            raise UnknownKanjiError(kanji) from err
