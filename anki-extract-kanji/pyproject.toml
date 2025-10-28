@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "python_template"
+name = "anki-extract-kanji"
 authors = [{name = "Andy Freeland", email = "andy@andyfreeland.net"}]
 classifiers = [
   "License :: OSI Approved :: MIT License",
@@ -13,7 +13,7 @@ dynamic = ["version", "description"]
 requires-python = "~=3.14.0"
 
 [project.urls]
-Home = "https://github.com/rouge8/python-template"
+Home = "https://github.com/rouge8/anki-extract-kanji"
 
 [tool.pytest.ini_options]
 addopts = "--strict-config --strict-markers"
@@ -24,7 +24,7 @@ allow_redefinition = true
 warn_unreachable = true
 
 [tool.hatch.version]
-path = "src/python_template/__init__.py"
+path = "src/anki_extract_kanji/__init__.py"
 
 [tool.ruff]
 target-version = "py312"
