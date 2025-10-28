@@ -1,41 +1,33 @@
-python-template
-===============
+anki-extract-kanji
+==================
 
-A template for Python applications.
+Find "unknown" kanji in an Anki collection.
 
-Creating a new project
-----------------------
+Installation
+------------
 
-This template is different from most project templates in that this is intended
-to keep your project up to date with changes to the template by treating the
-template as another git branch.
+With uv:
+^^^^^^^^
 
-1. Create a git repository with the ``template`` origin:
+1. ``uv sync``
 
-   .. code-block:: sh
+With mise:
+^^^^^^^^^^
 
-      git clone git@github.com:rouge8/python-template.git YOUR_PROJECT
-      cd YOUR_PROJECT
-      git remote rename origin template
+1. ``mise trust``
+2. ``mise install``
 
-2. Update the template with your project's details:
+Usage
+-----
 
-   .. code-block:: sh
+.. code-block:: sh
 
-      # Rename the application directory
-      git mv src/python_template src/YOUR_PROJECT
+   # https://docs.ankiweb.net/files.html#user-data
+   uv run anki-extract-kanji --collection PATH_TO_ANKI_COLLECTION --vocab-deck "Japanese" --kanji-deck "Kanji"
 
-      # Find and replace all instances of 'python-template' / 'python_template'
-      # with 'your-project' / 'your_project'
-      git grep python.template
 
-3. Commit your changes and push them to your Git repository.
-
-Keeping up to date
-------------------
-
-The strength of this approach to a template repository is that it makes keeping
-up to date as easy as a ``git merge`` and resolving any conflicts:
+Keeping up to date with the template
+------------------------------------
 
 .. code-block:: sh
 
