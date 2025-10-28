@@ -1,7 +1,7 @@
 [run]
 branch = True
 source =
-    python_template
+    anki_extract_kanji
     tests
 
 [report]
