@@ -4,6 +4,6 @@
     "config:recommended"
   ],
   "lockFileMaintenance": {
-    "enabled": false
+    "enabled": true
   }
 }
