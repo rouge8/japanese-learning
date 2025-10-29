@@ -1,0 +1,76 @@
+---
+
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pre-commit:
+    name: pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: rustfmt
+      - uses: Swatinem/rust-cache@v2.8.1
+      - uses: pre-commit/action@v3.0.1
+
+  files-changed:
+    name: Detect which files changed
+    runs-on: ubuntu-latest
+    outputs:
+      anki-extract-kanji: ${{ steps.changes.outputs.anki-extract-kanji }}
+      wanikani-burnt-kanji-to-anki: ${{ steps.changes.outputs.wanikani-burnt-kanji-to-anki }}
+      wanikani-apprentice: ${{ steps.changes.outputs.wanikani-apprentice }}
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            anki-extract-kanji:
+              - 'anki-extract-kanji/**'
+            wanikani-burnt-kanji-to-anki:
+              - 'wanikani-burnt-kanji-to-anki/**'
+            wanikani-apprentice:
+              - 'wanikani-apprentice/**'
+
+  anki-extract-kanji:
+    needs: files-changed
+    if: needs.files-changed.outputs.anki-extract-kanji == 'true'
+    name: anki-extract-kanji ${{ matrix.toxenv }}
+    runs-on: ubuntu-latest
+    env:
+      TOXENV: ${{ matrix.toxenv }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        toxenv:
+          - py,test-coverage
+          - mypy
+
+    steps:
+      - uses: actions/checkout@v5
+      - name: Generate the cache suffix
+        id: cache-suffix
+        run: |
+          echo cache-suffix=${TOXENV//,/-} >> $GITHUB_OUTPUT
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: anki-extract-kanji/pyproject.toml
+      - uses: astral-sh/setup-uv@v7
+        with:
+          working-directory: anki-extract-kanji
+          cache-suffix: ${{ steps.cache-suffix.outputs.cache-suffix }}
+      - name: tox
+        run: uvx tox -c anki-extract-kanji
