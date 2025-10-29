@@ -8,3 +8,6 @@ _.python.venv = { path = ".venv", create = true }
 postinstall = [
   "uv sync --active",
 ]
+
+[tasks.setup]
+run = "mise install"

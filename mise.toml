@@ -1,0 +1,9 @@
+experimental_monorepo_root = true
+
+[tasks.setup]
+depends = [
+  "//anki-extract-kanji:setup",
+  "//wanikani-apprentice:setup",
+  "//wanikani-burnt-kanji-to-anki:setup",
+]
+run = "pre-commit install"

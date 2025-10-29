@@ -1,0 +1,6 @@
+[tools]
+rust = "stable"
+flyctl = "latest"
+
+[tasks.setup]
+run = "mise install"
