@@ -1,0 +1,90 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "anki-extract-kanji"
+authors = [{name = "Andy Freeland", email = "andy@andyfreeland.net"}]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Private :: Do Not Upload",
+]
+dynamic = ["version", "description"]
+requires-python = "~=3.14.0"
+dependencies = [
+    "anki~=25.9.2",
+    "click~=8.3.0",
+]
+
+[project.scripts]
+anki-extract-kanji = "anki_extract_kanji.__main__:main"
+
+
+[project.urls]
+Home = "https://github.com/rouge8/anki-extract-kanji"
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers"
+
+[tool.mypy]
+strict = true
+allow_redefinition = true
+warn_unreachable = true
+
+[tool.hatch.version]
+path = "src/anki_extract_kanji/__init__.py"
+
+[tool.ruff]
+target-version = "py314"
+select = [
+  "E",
+  "F",
+  "W",
+  "I",
+  "B",
+  "B90",
+  "D2",
+  "D213",
+  "D3",
+  "D404",
+  "C4",
+  "UP",
+  "ISC",
+  "PGH",
+  "RUF",
+]
+ignore = [
+  # 1 blank line required before class docstring
+  "D203",
+  # Our docstring style allows for a multi-line summary, e.g.:
+  #
+  #"""
+  # Prevent database use without the appropriate fixture/marker, used
+  # automatically.
+  #
+  # Additional content goes here.
+  #"""
+  "D205",
+  # Inverse of D213
+  "D212",
+  # Explicitly concatenated string should be implicitly concatenated
+  "ISC003",
+]
+
+[tool.ruff.isort]
+force-single-line = true
+force-sort-within-sections = true
+order-by-type = false
+
+[tool.ruff.flake8-implicit-str-concat]
+allow-multiline = false
+
+[dependency-groups]
+dev = [
+    "coverage~=7.11.0",
+    "mypy~=1.18.2",
+    "pre-commit~=4.3.0",
+    "pytest~=8.4.1",
+    "pytest-cov~=7.0.0",
+    "pytest-randomly~=4.0.1",
+]
