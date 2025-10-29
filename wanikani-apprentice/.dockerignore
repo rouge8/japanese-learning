@@ -1,0 +1,12 @@
+# Config
+.env
+
+# Rust
+/target
+
+# Misc
+.pre-commit-config.yaml
+.github/
+LICENSE
+Dockerfile
+fly.toml

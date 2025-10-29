@@ -1,0 +1,8 @@
+# Config
+.env
+
+# Sample config
+!.env.sample
+
+# Added by cargo
+/target
