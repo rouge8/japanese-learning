@@ -155,7 +155,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: cd wanikani-apprentice && flyctl deploy --remote-only --env SENTRY_RELEASE=$(git describe --always --abrev=40)
+      - run: cd wanikani-apprentice && flyctl deploy --remote-only --env SENTRY_RELEASE=$(git describe --always --abbrev=40)
         env:
           FLY_API_TOKEN: ${{ secrets.WANIKANI_APPRENTICE_FLY_API_TOKEN }}
       - name: Sentry Release
