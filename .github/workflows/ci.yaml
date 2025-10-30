@@ -135,3 +135,31 @@ jobs:
         with:
           name: coverage-report
           path: wanikani-apprentice/target/llvm-cov/html
+
+  wanikani-apprentice-deploy:
+    needs:
+      - wanikani-apprentice
+      - pre-commit
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    name: wanikani-apprentice deploy
+    runs-on: ubuntu-latest
+
+    environment:
+      name: wanikani-apprentice-prod
+      url: https://wk-apprentice.rouge8.com
+    concurrency: wanikani-apprentice-prod
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: cd wanikani-apprentice && flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.WANIKANI_APPRENTICE_FLY_API_TOKEN }}
+      - name: Sentry Release
+        uses: getsentry/action-release@v3.3.0
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: rouge8
+          SENTRY_PROJECT: wanikani-apprentice
+        with:
+          environment: prod
