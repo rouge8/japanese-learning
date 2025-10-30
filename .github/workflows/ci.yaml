@@ -31,11 +31,14 @@ jobs:
   files-changed:
     name: Detect which files changed
     runs-on: ubuntu-latest
+
     outputs:
       anki-extract-kanji: ${{ steps.changes.outputs.anki-extract-kanji }}
       wanikani-burnt-kanji-to-anki: ${{ steps.changes.outputs.wanikani-burnt-kanji-to-anki }}
       wanikani-apprentice: ${{ steps.changes.outputs.wanikani-apprentice }}
+
     steps:
+      - uses: actions/checkout@v5
       - uses: dorny/paths-filter@v3
         id: changes
         with:
