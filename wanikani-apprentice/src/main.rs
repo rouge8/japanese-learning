@@ -395,7 +395,16 @@ async fn main() -> reqwest::Result<()> {
 
     // Configure Sentry
     let mut opts = sentry::apply_defaults(sentry::ClientOptions {
-        release: Some(git_version!(args = ["--always", "--abbrev=40"]).into()),
+        release: Some(
+            config
+                .sentry_release
+                .clone()
+                .unwrap_or(
+                    git_version!(args = ["--always", "--abbrev=40"], fallback = "UNKNOWN")
+                        .to_string(),
+                )
+                .into(),
+        ),
         ..Default::default()
     });
     // Disable debug-images: it conflicts with the 'debug = 1' rustc build option:
@@ -477,6 +486,7 @@ mod tests {
                     .to_string(),
                 bind_address: "127.0.0.1:0".to_string(),
                 sentry_dsn: None,
+                sentry_release: None,
                 trusted_hosts: vec!["".to_string()],
             },
             Database::new(),
