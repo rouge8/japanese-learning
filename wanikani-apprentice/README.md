@@ -1,6 +1,8 @@
 wanikani-apprentice
 ===================
 
+Extra review for apprentice-level WaniKani items.
+
 Production
 ----------
 
