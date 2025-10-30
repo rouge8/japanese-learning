@@ -16,13 +16,13 @@ COPY --from=planner /src/recipe.json recipe.json
 RUN cargo chef cook --release --recipe-path recipe.json
 
 # Build the application
-ARG SENTRY_RELEASE
 RUN git config --global --add safe.directory /src
 COPY . .
 RUN cargo install --locked --path .
 
 # Bundle the application
 FROM debian:bookworm-slim
+ARG SENTRY_RELEASE
 RUN apt-get update \
   && apt-get install -y --no-install-recommends ca-certificates \
   && apt-get clean
