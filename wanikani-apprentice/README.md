@@ -1,6 +1,11 @@
 wanikani-apprentice
 ===================
 
+Production
+----------
+
+<https://wk-apprentice.rouge8.com/>
+
 Setup
 -----
 
