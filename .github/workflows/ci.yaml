@@ -23,6 +23,9 @@ jobs:
         with:
           components: rustfmt
       - uses: Swatinem/rust-cache@v2.8.1
+        with:
+          workspaces: |
+            wanikani-apprentice
       - uses: pre-commit/action@v3.0.1
 
   files-changed:
@@ -105,3 +108,30 @@ jobs:
           cache-suffix: ${{ steps.cache-suffix.outputs.cache-suffix }}
       - name: tox
         run: uvx tox -c wanikani-burnt-kanji-to-anki
+
+  wanikani-apprentice:
+    needs: files-changed
+    if: needs.files-changed.outputs.wanikani-apprentice == 'true'
+    name: wanikani-apprentice build & test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+      - name: Install cargo-nextest
+        uses: taiki-e/install-action@nextest
+      - uses: Swatinem/rust-cache@v2.8.1
+        with:
+          workspaces: |
+            wanikani-apprentice
+      - name: Run tests
+        run: cd wanikani-apprentice && cargo llvm-cov nextest --no-fail-fast --html --color=always
+      - name: Upload HTML coverage report
+        uses: actions/upload-artifact@v5
+        with:
+          name: coverage-report
+          path: wanikani-apprentice/target/llvm-cov/html
