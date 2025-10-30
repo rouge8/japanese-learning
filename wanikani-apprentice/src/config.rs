@@ -10,8 +10,9 @@ pub struct Config {
     pub session_key: String,
     #[serde(default = "default_bind_address")]
     pub bind_address: String,
-    pub sentry_dsn: Option<String>,
     pub trusted_hosts: Vec<String>,
+    pub sentry_dsn: Option<String>,
+    pub sentry_release: Option<String>,
 }
 
 fn default_wanikani_api_url() -> String {
