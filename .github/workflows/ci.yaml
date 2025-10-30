@@ -74,3 +74,34 @@ jobs:
           cache-suffix: ${{ steps.cache-suffix.outputs.cache-suffix }}
       - name: tox
         run: uvx tox -c anki-extract-kanji
+
+  wanikani-burnt-kanji-to-anki:
+    needs: files-changed
+    if: needs.files-changed.outputs.wanikani-burnt-kanji-to-anki == 'true'
+    name: wanikani-burnt-kanji-to-anki ${{ matrix.toxenv }}
+    runs-on: ubuntu-latest
+    env:
+      TOXENV: ${{ matrix.toxenv }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        toxenv:
+          - py,test-coverage
+          - mypy
+
+    steps:
+      - uses: actions/checkout@v5
+      - name: Generate the cache suffix
+        id: cache-suffix
+        run: |
+          echo cache-suffix=${TOXENV//,/-} >> $GITHUB_OUTPUT
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: wanikani-burnt-kanji-to-anki/pyproject.toml
+      - uses: astral-sh/setup-uv@v7
+        with:
+          working-directory: wanikani-burnt-kanji-to-anki
+          cache-suffix: ${{ steps.cache-suffix.outputs.cache-suffix }}
+      - name: tox
+        run: uvx tox -c wanikani-burnt-kanji-to-anki
