@@ -163,3 +163,19 @@ jobs:
           SENTRY_PROJECT: wanikani-apprentice
         with:
           environment: prod
+
+  combined-results:
+    needs:
+      - pre-commit
+      - anki-extract-kanji
+      - wanikani-burnt-kanji-to-anki
+      - wanikani-apprentice
+    if: always()
+    name: Combined result
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check for failures
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: |
+          echo "One or more jobs have failed!" && exit 1
