@@ -65,24 +65,6 @@ repos:
         types: [html]
   - repo: local
     hooks:
-      - id: attrs-apis
-        name: Use new attrs APIs (@attrs.define, @attrs.frozen, attrs.field())
-        language: pygrep
-        entry: >
-          (?x)(
-            # Legacy APIs
-            @attr\.s
-            |attr\.ib\(
-            |@attr\.dataclass
-            # Legacy namespace
-            |@attr\.define
-            |@attr\.frozen
-            |@attr\.mutable
-            |attr\.field\(
-            # Use @attrs.define instead
-            |@attrs\.mutable
-          )
-        types: [python]
       - id: logging.getLogger
         name: Use structlog.get_logger() instead of logging.getLogger()
         language: pygrep
