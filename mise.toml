@@ -9,4 +9,7 @@ depends = [
   "//wanikani-apprentice:setup",
   "//wanikani-burnt-kanji-to-anki:setup",
 ]
-run = "pre-commit install"
+run = [
+  "mise install",
+  "pre-commit install",
+]
