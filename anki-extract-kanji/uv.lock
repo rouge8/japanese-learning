@@ -42,7 +42,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "anki", specifier = "~=25.9.2" },
+    { name = "anki", specifier = "==25.9.2" },
     { name = "click", specifier = "~=8.3.0" },
 ]
 
