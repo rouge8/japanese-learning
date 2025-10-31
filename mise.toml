@@ -1,5 +1,8 @@
 experimental_monorepo_root = true
 
+[tools]
+pre-commit = "latest"
+
 [tasks.setup]
 depends = [
   "//anki-extract-kanji:setup",
