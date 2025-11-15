@@ -1,6 +1,11 @@
 [tools]
 rust = "stable"
+"cargo:cargo-nextest" = "latest"
 flyctl = "latest"
 
 [tasks.setup]
 run = "mise install"
+
+[tasks.test]
+depends = [":setup"]
+run = "cargo nextest run"

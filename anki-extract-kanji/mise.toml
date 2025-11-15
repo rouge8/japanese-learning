@@ -11,3 +11,7 @@ postinstall = [
 
 [tasks.setup]
 run = "mise install"
+
+[tasks.test]
+depends = [":setup"]
+run = "tox"

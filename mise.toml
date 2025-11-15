@@ -13,3 +13,10 @@ run = [
   "mise install",
   "pre-commit install",
 ]
+
+[tasks.test]
+depends = [
+  "//anki-extract-kanji:test",
+  "//wanikani-apprentice:test",
+  "//wanikani-burnt-kanji-to-anki:test",
+]
