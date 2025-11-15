@@ -4,13 +4,8 @@ python = "3.14.0"
 [env]
 _.python.venv = { path = ".venv", create = true }
 
-[hooks]
-postinstall = [
-  "uv sync --active",
-]
-
 [tasks.setup]
-run = "mise install"
+run = "uv sync --active"
 
 [tasks.test]
 depends = [":setup"]

@@ -4,8 +4,7 @@ rust = "stable"
 flyctl = "latest"
 
 [tasks.setup]
-run = "mise install"
+run = "true"
 
 [tasks.test]
-depends = [":setup"]
 run = "cargo nextest run"

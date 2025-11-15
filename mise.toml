@@ -10,7 +10,6 @@ depends = [
   "//wanikani-burnt-kanji-to-anki:setup",
 ]
 run = [
-  "mise install",
   "pre-commit install",
 ]
 
