@@ -19,3 +19,6 @@ depends = [
   "//wanikani-apprentice:test",
   "//wanikani-burnt-kanji-to-anki:test",
 ]
+
+[tasks.lint]
+run = "pre-commit run --all-files"
