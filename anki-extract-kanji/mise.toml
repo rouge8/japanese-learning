@@ -5,6 +5,7 @@ python = "3.14.0"
 _.python.venv = { path = ".venv", create = true }
 
 [tasks.setup]
+sources = ["pyproject.toml", "uv.lock"]
 run = "uv sync --active"
 
 [tasks.test]
