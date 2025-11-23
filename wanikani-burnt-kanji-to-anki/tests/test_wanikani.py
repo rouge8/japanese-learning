@@ -1,7 +1,8 @@
 import faker
+from httpx import Response
 from httpx import URL
 import pytest
-from pytest_httpx import HTTPXMock
+from respx import MockRouter
 
 from wanikani_burnt_kanji_to_anki.wanikani import _KANJI
 from wanikani_burnt_kanji_to_anki.wanikani import Kanji
@@ -12,17 +13,10 @@ from .factories import KanjiFactory
 
 
 class TestWaniKaniAPIClient:
-    @pytest.fixture
-    def headers(self, api_client: WaniKaniAPIClient) -> dict[str, str]:
-        return dict(api_client.client.headers) | {
-            "Authorization": f"Bearer {api_client.api_key}",
-        }
-
     def test_load_kanji(
         self,
-        headers: dict[str, str],
         api_client: WaniKaniAPIClient,
-        httpx_mock: HTTPXMock,
+        respx_mock: MockRouter,
         faker: faker.proxy.Faker,
     ) -> None:
         assert not _KANJI, "Kanji cache has already been populated!"
@@ -74,31 +68,37 @@ class TestWaniKaniAPIClient:
             for k in kanji
         }
 
-        httpx_mock.add_response(
-            url=URL(
+        respx_mock.get(
+            URL(
                 f"{api_client.BASE_URL}/subjects",
                 params={"types": "kanji", "hidden": "false"},
-            ),
-            headers=headers,
-            json={
-                "pages": {
-                    "next_url": f"{api_client.BASE_URL}/subjects?types=kanji&hidden=false&page_after_id=12345",  # noqa: E501
+            )
+        ).mock(
+            Response(
+                200,
+                json={
+                    "pages": {
+                        "next_url": f"{api_client.BASE_URL}/subjects?types=kanji&hidden=false&page_after_id=12345",  # noqa: E501
+                    },
+                    "data": [kanji[0]],
                 },
-                "data": [kanji[0]],
-            },
+            )
         )
-        httpx_mock.add_response(
-            url=URL(
+        respx_mock.get(
+            URL(
                 f"{api_client.BASE_URL}/subjects",
                 params={"types": "kanji", "hidden": "false", "page_after_id": "12345"},
-            ),
-            headers=headers,
-            json={
-                "pages": {
-                    "next_url": None,
+            )
+        ).mock(
+            Response(
+                200,
+                json={
+                    "pages": {
+                        "next_url": None,
+                    },
+                    "data": kanji[1:],
                 },
-                "data": kanji[1:],
-            },
+            )
         )
 
         api_client.load_kanji()
@@ -106,9 +106,8 @@ class TestWaniKaniAPIClient:
 
     def test_burnt_kanji(
         self,
-        headers: dict[str, str],
         api_client: WaniKaniAPIClient,
-        httpx_mock: HTTPXMock,
+        respx_mock: MockRouter,
         faker: faker.proxy.Faker,
     ) -> None:
         expected_kanji = KanjiFactory.create_batch(faker.random_int(min=3, max=10))
@@ -122,18 +121,21 @@ class TestWaniKaniAPIClient:
             for kanji in expected_kanji
         ]
 
-        httpx_mock.add_response(
-            url=URL(
+        respx_mock.get(
+            URL(
                 f"{api_client.BASE_URL}/assignments",
                 params={"subject_types": "kanji", "burned": "true", "hidden": "false"},
-            ),
-            headers=headers,
-            json={
-                "pages": {
-                    "next_url": None,
+            )
+        ).mock(
+            Response(
+                200,
+                json={
+                    "pages": {
+                        "next_url": None,
+                    },
+                    "data": assignments,
                 },
-                "data": assignments,
-            },
+            )
         )
 
         assert list(api_client.burnt_kanji()) == expected_kanji
