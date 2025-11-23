@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  pre-commit:
-    name: pre-commit
+  prek:
+    name: prek
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -26,7 +26,7 @@ jobs:
         with:
           workspaces: |
             wanikani-apprentice
-      - uses: pre-commit/action@v3.0.1
+      - uses: j178/prek-action@v1
 
   files-changed:
     name: Detect which files changed
@@ -142,7 +142,7 @@ jobs:
   wanikani-apprentice-deploy:
     needs:
       - wanikani-apprentice
-      - pre-commit
+      - prek
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     name: wanikani-apprentice deploy
     runs-on: ubuntu-latest
@@ -169,7 +169,7 @@ jobs:
 
   combined-results:
     needs:
-      - pre-commit
+      - prek
       - anki-extract-kanji
       - wanikani-burnt-kanji-to-anki
       - wanikani-apprentice

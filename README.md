@@ -14,6 +14,6 @@ can be run with `mise run //:test`.
 
 ## Linting
 
-Linting is done with [pre-commit](https://pre-commit.com/). `mise run //:setup`
+Linting is done with [prek](https://prek.j178.dev/). `mise run //:setup`
 installs the pre-commit hooks so it runs when committing, but the entire project
 can also be linted with `mise run //:lint`.
