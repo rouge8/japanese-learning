@@ -25,8 +25,13 @@ wanikani-burnt-kanji-to-anki = "wanikani_burnt_kanji_to_anki.__main__:cli"
 [project.urls]
 Home = "https://github.com/rouge8/wanikani-burnt-kanji-to-anki"
 
-[tool.pytest.ini_options]
-addopts = "--strict-config --strict-markers"
+[tool.pytest]
+minversion = "9.0"
+addopts = [
+  "-ra",
+  "--strict-config",
+  "--strict-markers",
+]
 
 [tool.mypy]
 strict = true

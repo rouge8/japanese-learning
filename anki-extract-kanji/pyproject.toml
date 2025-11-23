@@ -23,8 +23,13 @@ anki-extract-kanji = "anki_extract_kanji.__main__:main"
 [project.urls]
 Home = "https://github.com/rouge8/anki-extract-kanji"
 
-[tool.pytest.ini_options]
-addopts = "--strict-config --strict-markers"
+[tool.pytest]
+minversion = "9.0"
+addopts = [
+  "-ra",
+  "--strict-config",
+  "--strict-markers",
+]
 
 [tool.mypy]
 strict = true
