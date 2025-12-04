@@ -100,5 +100,5 @@ dev = [
     "factory-boy~=3.3.3",
     "faker~=37.8.0",
     "pytest-mock~=3.15.1",
-    "respx~=0.22.0",
+    "falcon~=4.2.0",
 ]
