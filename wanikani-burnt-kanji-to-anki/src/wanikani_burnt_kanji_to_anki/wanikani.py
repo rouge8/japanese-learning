@@ -28,9 +28,8 @@ _KANJI: dict[int, Kanji] = {}
 
 @attrs.frozen
 class WaniKaniAPIClient:
-    BASE_URL = "https://api.wanikani.com/v2"
-
     api_key: str = attrs.field(repr=False)
+    base_url: str = "https://api.wanikani.com/v2"
     client: httpx.Client = attrs.field(factory=httpx.Client)
 
     def __attrs_post_init__(self) -> None:
@@ -44,7 +43,7 @@ class WaniKaniAPIClient:
         log.info("requesting", path=path, params=params)
         start = time.time()
         resp = self.client.get(
-            f"{self.BASE_URL}/{path}",
+            f"{self.base_url}/{path}",
             params=params,
             headers={"Authorization": f"Bearer {self.api_key}"},
         )
@@ -72,7 +71,7 @@ class WaniKaniAPIClient:
 
             next_url = resp["pages"]["next_url"]
             if next_url is not None:
-                next_url = next_url.split(f"{self.BASE_URL}/", 1)[1]
+                next_url = next_url.split(f"{self.base_url}/", 1)[1]
 
             yield from resp["data"]
 
