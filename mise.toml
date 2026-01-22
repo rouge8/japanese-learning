@@ -1,5 +1,12 @@
 experimental_monorepo_root = true
 
+[monorepo]
+config_roots = [
+  "anki-extract-kanji",
+  "wanikani-apprentice",
+  "wanikani-burnt-kanji-to-anki",
+]
+
 [tools]
 prek = "latest"
 
