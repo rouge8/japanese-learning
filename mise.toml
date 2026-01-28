@@ -11,21 +11,13 @@ config_roots = [
 prek = "latest"
 
 [tasks.setup]
-depends = [
-  "//anki-extract-kanji:setup",
-  "//wanikani-apprentice:setup",
-  "//wanikani-burnt-kanji-to-anki:setup",
-]
+depends = "//...:setup"
 run = [
   "prek install",
 ]
 
 [tasks.test]
-depends = [
-  "//anki-extract-kanji:test",
-  "//wanikani-apprentice:test",
-  "//wanikani-burnt-kanji-to-anki:test",
-]
+depends = "//...:test"
 
 [tasks.lint]
 run = "prek run --all-files"
