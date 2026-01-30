@@ -16,11 +16,23 @@ dependencies = [
     "click~=8.3.0",
 ]
 
+[dependency-groups]
+dev = [
+    "coverage~=7.11.0",
+    "mypy~=1.18.2",
+    "pytest~=9.0.1",
+    "pytest-cov~=7.0.0",
+    "pytest-randomly~=4.0.1",
+]
+
 [project.scripts]
 anki-extract-kanji = "anki_extract_kanji.__main__:main"
 
 [project.urls]
 Home = "https://github.com/rouge8/anki-extract-kanji"
+
+[tool.hatch.version]
+path = "src/anki_extract_kanji/__init__.py"
 
 [tool.uv]
 add-bounds = "exact"
@@ -37,9 +49,6 @@ addopts = [
 strict = true
 allow_redefinition = true
 warn_unreachable = true
-
-[tool.hatch.version]
-path = "src/anki_extract_kanji/__init__.py"
 
 [tool.ruff]
 target-version = "py314"
@@ -85,12 +94,3 @@ order-by-type = false
 
 [tool.ruff.flake8-implicit-str-concat]
 allow-multiline = false
-
-[dependency-groups]
-dev = [
-    "coverage~=7.11.0",
-    "mypy~=1.18.2",
-    "pytest~=9.0.1",
-    "pytest-cov~=7.0.0",
-    "pytest-randomly~=4.0.1",
-]

@@ -19,11 +19,27 @@ dependencies = [
   "structlog~=25.5.0",
 ]
 
+[dependency-groups]
+dev = [
+    "coverage~=7.11.0",
+    "mypy~=1.18.2",
+    "pytest~=9.0.1",
+    "pytest-cov~=7.0.0",
+    "pytest-randomly~=4.0.1",
+    "factory-boy~=3.3.3",
+    "faker~=37.8.0",
+    "pytest-mock~=3.15.1",
+    "falcon~=4.2.0",
+]
+
 [project.scripts]
 wanikani-burnt-kanji-to-anki = "wanikani_burnt_kanji_to_anki.__main__:cli"
 
 [project.urls]
 Home = "https://github.com/rouge8/wanikani-burnt-kanji-to-anki"
+
+[tool.hatch.version]
+path = "src/wanikani_burnt_kanji_to_anki/__init__.py"
 
 [tool.uv]
 add-bounds = "exact"
@@ -40,12 +56,6 @@ addopts = [
 strict = true
 allow_redefinition = true
 warn_unreachable = true
-
-[tool.pyright]
-venv = "wanikani-burnt-kanji-to-anki"
-
-[tool.hatch.version]
-path = "src/wanikani_burnt_kanji_to_anki/__init__.py"
 
 [tool.ruff]
 target-version = "py314"
@@ -92,16 +102,3 @@ known-first-party = ["wanikani_burnt_kanji_to_anki"]
 
 [tool.ruff.flake8-implicit-str-concat]
 allow-multiline = false
-
-[dependency-groups]
-dev = [
-    "coverage~=7.11.0",
-    "mypy~=1.18.2",
-    "pytest~=9.0.1",
-    "pytest-cov~=7.0.0",
-    "pytest-randomly~=4.0.1",
-    "factory-boy~=3.3.3",
-    "faker~=37.8.0",
-    "pytest-mock~=3.15.1",
-    "falcon~=4.2.0",
-]
