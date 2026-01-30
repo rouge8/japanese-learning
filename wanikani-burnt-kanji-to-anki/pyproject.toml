@@ -25,6 +25,9 @@ wanikani-burnt-kanji-to-anki = "wanikani_burnt_kanji_to_anki.__main__:cli"
 [project.urls]
 Home = "https://github.com/rouge8/wanikani-burnt-kanji-to-anki"
 
+[tool.uv]
+add-bounds = "exact"
+
 [tool.pytest]
 minversion = "9.0"
 addopts = [

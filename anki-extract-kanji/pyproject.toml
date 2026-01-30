@@ -19,9 +19,11 @@ dependencies = [
 [project.scripts]
 anki-extract-kanji = "anki_extract_kanji.__main__:main"
 
-
 [project.urls]
 Home = "https://github.com/rouge8/anki-extract-kanji"
+
+[tool.uv]
+add-bounds = "exact"
 
 [tool.pytest]
 minversion = "9.0"

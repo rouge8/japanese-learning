@@ -1,5 +1,8 @@
 experimental_monorepo_root = true
 
+[env]
+UV_PREVIEW_FEATURES = "add-bounds"
+
 [monorepo]
 config_roots = [
   "anki-extract-kanji",
