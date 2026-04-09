@@ -134,7 +134,7 @@ jobs:
       - name: Run tests
         run: cd wanikani-apprentice && cargo llvm-cov nextest --no-fail-fast --html --color=always
       - name: Upload HTML coverage report
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report
           path: wanikani-apprentice/target/llvm-cov/html
