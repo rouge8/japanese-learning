@@ -26,7 +26,7 @@ jobs:
         with:
           workspaces: |
             wanikani-apprentice
-      - uses: j178/prek-action@v1
+      - uses: j178/prek-action@v2
 
   files-changed:
     name: Detect which files changed
