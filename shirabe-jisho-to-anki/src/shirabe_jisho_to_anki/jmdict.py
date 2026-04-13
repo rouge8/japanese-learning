@@ -116,10 +116,6 @@ class Entry:
         )
 
     @property
-    def _all_readings(self) -> tuple[str, ...]:
-        return self.kanji_readings + self.kana_readings
-
-    @property
     def _parts_of_speech(self) -> set[str]:
         parts_of_speech = itertools.chain.from_iterable(
             sense.parts_of_speech for sense in self.senses
