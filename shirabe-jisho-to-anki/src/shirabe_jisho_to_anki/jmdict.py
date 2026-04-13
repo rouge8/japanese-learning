@@ -1,15 +1,33 @@
 from collections import defaultdict
 from collections.abc import Iterator
+import itertools
 from typing import Literal
 from typing import Self
 
 from attrs import define
 from attrs import Factory
+from attrs import frozen
 from lxml.etree import Element
 from lxml.etree import iterparse
 
 from .helpers import exactly_one
 from .helpers import not_none
+from .shirabe_jisho import Bookmark
+
+
+@define
+class EntryNotFound(Exception):
+    """No entries were found for a Bookmark."""
+
+    bookmark: Bookmark
+
+
+@define
+class MultipleEntriesForBookmark(Exception):
+    """Multiple entries for a Bookmark could not be narrowed down."""
+
+    bookmark: Bookmark
+    entries: list[Entry]
 
 
 @define
@@ -36,17 +54,48 @@ class JMDict:
 
         return cls(entries_map)
 
-    def lookup(self, reading: str) -> list[Entry] | None:
-        return self._entries.get(reading)
+    def lookup_all(self, bookmark: Bookmark) -> list[Entry]:
+        """Lookup all entries for a Bookmark."""
+        if bookmark.kanji_reading:
+            entries = set(self._entries.get(bookmark.kanji_reading) or [])
+        else:
+            entries = set(
+                itertools.chain.from_iterable(
+                    {
+                        entry
+                        for entry in (self._entries.get(reading) or [])
+                        # Filter out entries with Kanji readings because the
+                        # bookmark doesn't have a Kanji reading
+                        if not entry.kanji_readings
+                    }
+                    for reading in bookmark.kana_readings
+                )
+            )
+        return [e for e in entries if e.senses]
+
+    def lookup_best(self, bookmark: Bookmark) -> Entry:
+        """Lookup the "best" entry for a Bookmark."""
+        entries = self.lookup_all(bookmark)
+        if not entries:
+            raise EntryNotFound(bookmark)
+        elif len(entries) == 1:
+            return entries[0]
+        else:
+            candidates = [
+                e for e in entries if set(bookmark.kana_readings) & set(e.kana_readings)
+            ]
+            if len(candidates) > 1:
+                raise MultipleEntriesForBookmark(bookmark, candidates)
+            return candidates[0]
 
 
-@define(kw_only=True)
+@frozen(kw_only=True)
 class Entry:
     """A JMDict entry."""
 
-    kanji_readings: list[str]
-    kana_readings: list[str]
-    senses: list[Sense]
+    kanji_readings: tuple[str, ...]
+    kana_readings: tuple[str, ...]
+    senses: tuple[Sense, ...]
 
     @classmethod
     def from_element(cls, element: Element) -> Self:
@@ -67,10 +116,13 @@ class Entry:
             ):
                 kana_readings.append(reading)
 
+        senses = (Sense.from_element(el) for el in element.findall("sense"))
+        senses = (s for s in senses if cls._should_add_sense(s))
+
         return cls(
-            kanji_readings=kanji_readings,
-            kana_readings=kana_readings,
-            senses=[Sense.from_element(el) for el in element.findall("sense")],
+            kanji_readings=tuple(kanji_readings),
+            kana_readings=tuple(kana_readings),
+            senses=tuple(senses),
         )
 
     @staticmethod
@@ -82,8 +134,6 @@ class Entry:
                 "word containing irregular kanji usage",
                 "irregular okurigana usage",
                 "word containing out-dated kanji or kanji usage",
-                "rarely used kanji form",
-                "search-only kanji form",
             }
         )
 
@@ -94,24 +144,28 @@ class Entry:
             & {
                 "word containing irregular kana usage",
                 "out-dated or obsolete kana usage",
-                "rarely used kana form",
-                "search-only kana form",
             }
         )
 
+    @staticmethod
+    def _should_add_sense(sense: Sense) -> bool:
+        return not bool(sense.misc & {"archaic", "character"})
 
-@define(kw_only=True)
+
+@frozen(kw_only=True)
 class Sense:
     """The translational equivalent of a Japanese word."""
 
-    parts_of_speech: list[str]
-    meanings: list[str]
+    parts_of_speech: tuple[str, ...]
+    meanings: tuple[str, ...]
+    misc: frozenset[str]
 
     @classmethod
     def from_element(cls, element: Element) -> Self:
-        parts_of_speech = [not_none(el.text) for el in element.findall("pos")]
-        meanings = [not_none(el.text) for el in element.findall("gloss")]
-        return cls(parts_of_speech=parts_of_speech, meanings=meanings)
+        parts_of_speech = tuple(not_none(el.text) for el in element.findall("pos"))
+        meanings = tuple(not_none(el.text) for el in element.findall("gloss"))
+        misc = frozenset(not_none(el.text) for el in element.findall("misc"))
+        return cls(parts_of_speech=parts_of_speech, meanings=meanings, misc=misc)
 
 
 @define
