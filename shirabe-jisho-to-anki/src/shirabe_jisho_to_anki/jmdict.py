@@ -12,6 +12,7 @@ from lxml.etree import iterparse
 
 from .helpers import exactly_one
 from .helpers import not_none
+from .jp_helpers import godan_verb_to_masu_form
 from .shirabe_jisho import Bookmark
 
 
@@ -96,6 +97,22 @@ class Entry:
     kanji_readings: tuple[str, ...]
     kana_readings: tuple[str, ...]
     senses: tuple[Sense, ...]
+
+    def masu_forms(self) -> set[str] | None:
+        """'masu' forms, if the entry is a verb."""
+        all_readings = self.kanji_readings + self.kana_readings
+
+        parts_of_speech = itertools.chain.from_iterable(
+            sense.parts_of_speech for sense in self.senses
+        )
+        parts_of_speech = {pos.lower() for pos in parts_of_speech}
+
+        if "ichidan verb" in parts_of_speech:
+            return {reading[:-1] + "ます" for reading in all_readings}
+        elif any(pos.startswith("godan verb with") for pos in parts_of_speech):
+            return {godan_verb_to_masu_form(reading) for reading in all_readings}
+        elif any(pos.startswith("suru verb") for pos in parts_of_speech):
+            return {reading[:-2] + "します" for reading in all_readings}
 
     @classmethod
     def from_element(cls, element: Element) -> Self:

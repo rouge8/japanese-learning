@@ -49,7 +49,9 @@ class Card:
 
     def search_terms(self) -> set[str]:
         """Search terms to use when matching existing cards."""
-        return set(self._entry.kanji_readings) or set(self._entry.kana_readings)
+        readings = set(self._entry.kanji_readings) or set(self._entry.kana_readings)
+        masu_forms = self._entry.masu_forms() or set()
+        return readings | masu_forms
 
     @classmethod
     def from_jmdict_entry(cls, entry: JMDictEntry) -> Self:
