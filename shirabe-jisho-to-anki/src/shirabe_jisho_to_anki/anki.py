@@ -5,6 +5,7 @@ from anki.collection import Collection
 from anki.decks import DeckId
 from attrs import define
 from attrs import field
+from attrs import frozen
 
 from .helpers import not_none
 from .jmdict import Entry as JMDictEntry
@@ -12,7 +13,8 @@ from .jmdict import Entry as JMDictEntry
 
 @define
 class Deck:
-    _collection: Collection = field(repr=False)
+    """An Anki deck."""
+
     deck_id: DeckId
     name: str
     notes: set[str]
@@ -25,7 +27,7 @@ class Deck:
             collection.get_card(cid).note().fields[0]
             for cid in collection.decks.cids(deck_id)
         }
-        return cls(collection, deck["id"], name, notes)
+        return cls(deck["id"], name, notes)
 
     def has_card(self, card: Card) -> bool:
         """
@@ -39,7 +41,7 @@ class Deck:
         )
 
 
-@define(kw_only=True)
+@frozen(kw_only=True)
 class Card:
     """An Anki card."""
 
@@ -49,9 +51,20 @@ class Card:
 
     def search_terms(self) -> set[str]:
         """Search terms to use when matching existing cards."""
-        readings = set(self._entry.kanji_readings) or set(self._entry.kana_readings)
         masu_forms = self._entry.masu_forms() or set()
-        return readings | masu_forms
+        # Note that we don't use the kana readings because they will match many
+        # more unrelated cards. For example:
+        #
+        # 揚げる / あげる
+        #
+        # would also match:
+        #
+        # 挙げる / あげる
+        #
+        # and:
+        #
+        # 上げる / あげる
+        return set(self._entry.kanji_readings) | masu_forms
 
     @classmethod
     def from_jmdict_entry(cls, entry: JMDictEntry) -> Self:
@@ -63,6 +76,12 @@ class Card:
             else:
                 return reading
 
+        def format_meaning(meaning: str) -> str:
+            if is_noun_with_suru_verb:
+                return f"{meaning} (n, v)"
+            else:
+                return meaning
+
         front = ""
         if entry.kanji_readings:
             front += " / ".join(
@@ -72,6 +91,9 @@ class Card:
             front += " / "
         front += " / ".join(format_reading(reading) for reading in entry.kana_readings)
 
-        back_lines = ["; ".join(sense.meanings) for sense in entry.senses]
+        back_lines = [
+            "; ".join(format_meaning(meaning) for meaning in sense.meanings)
+            for sense in entry.senses
+        ]
 
         return cls(entry=entry, front=front, back="\n".join(back_lines))

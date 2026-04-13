@@ -99,13 +99,13 @@ class Entry:
     senses: tuple[Sense, ...]
 
     def masu_forms(self) -> set[str] | None:
-        """'masu' forms, if the entry is a verb."""
+        """'masu' forms of Kanji readings, if the entry is a verb."""
         if "ichidan verb" in self._parts_of_speech:
-            return {reading[:-1] + "ます" for reading in self._all_readings}
-        elif any(pos.startswith("godan verb with") for pos in self._parts_of_speech):
-            return {godan_verb_to_masu_form(reading) for reading in self._all_readings}
+            return {reading[:-1] + "ます" for reading in self.kanji_readings}
+        elif any(pos.startswith("godan verb") for pos in self._parts_of_speech):
+            return {godan_verb_to_masu_form(reading) for reading in self.kanji_readings}
         elif any(pos.startswith("suru verb") for pos in self._parts_of_speech):
-            return {reading[:-2] + "します" for reading in self._all_readings}
+            return {reading[:-2] + "します" for reading in self.kanji_readings}
         else:
             return None
 
