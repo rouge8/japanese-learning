@@ -29,31 +29,31 @@ class Deck:
         }
         return cls(deck["id"], name, notes)
 
-    def has_card(self, card: Card) -> bool:
+    def has_note(self, new_note: Note) -> bool:
         """
-        Whether a card already exists in a deck, as defined by the card's
+        Whether a note already exists in a deck, as defined by the note's
         search terms.
         """
         return any(
             re.search(rf"\b{term}\b", note)
-            for term in card.search_terms()
+            for term in new_note.search_terms()
             for note in self.notes
         )
 
 
 @frozen(kw_only=True)
-class Card:
-    """An Anki card."""
+class Note:
+    """An Anki note."""
 
     _entry: JMDictEntry = field(alias="entry")
     front: str
     back: str
 
     def search_terms(self) -> set[str]:
-        """Search terms to use when matching existing cards."""
+        """Search terms to use when matching existing notes."""
         masu_forms = self._entry.masu_forms() or set()
         # Note that we don't use the kana readings because they will match many
-        # more unrelated cards. For example:
+        # more unrelated notes. For example:
         #
         # 揚げる / あげる
         #

@@ -4,8 +4,8 @@ from anki.collection import Collection
 import click
 from structlog.stdlib import get_logger
 
-from .anki import Card
 from .anki import Deck
+from .anki import Note
 from .jmdict import EntryNotFound
 from .jmdict import JMDict
 from .jmdict import MultipleEntriesForBookmark
@@ -40,8 +40,9 @@ logger = get_logger()
     required=True,
     help="Name of the destination Anki deck",
 )
+@click.option("--anki-tag", required=True, help="Tag to apply to the new notes in Anki")
 @click.option(
-    "--dry-run", default=True, help="When True, don't actually create new cards"
+    "--dry-run", default=True, help="When True, don't actually create new notes"
 )
 def main(
     *,
@@ -49,11 +50,12 @@ def main(
     jmdict_xml: str,
     anki_collection_path: str,
     anki_deck_name: str,
+    anki_tag: str,
     dry_run: bool,
 ) -> None:
     """
     Sync a CSV export from Shirabe Jisho to an Anki deck, checking for existing
-    cards.
+    notes.
     """
     anki_collection = Collection(anki_collection_path)
     anki_deck = Deck.from_name(anki_collection, anki_deck_name)
@@ -73,17 +75,17 @@ def main(
             )
             continue
 
-        card = Card.from_jmdict_entry(jmdict_entry)
-        if anki_deck.has_card(card):
-            logger.info("Card for bookmark already exists", bookmark=bookmark)
+        note = Note.from_jmdict_entry(jmdict_entry)
+        if anki_deck.has_note(note):
+            logger.info("Note for bookmark already exists", bookmark=bookmark)
         else:
             if not dry_run:
-                logger.info("Creating card for bookmark", bookmark=bookmark)
-                # TODO: Create the card
+                logger.info("Creating note for bookmark", bookmark=bookmark)
+                # TODO: Create the note
             else:
                 logger.info(
-                    "Would create card for bookmark",
+                    "Would create note for bookmark",
                     bookmark=bookmark,
-                    front=card.front,
-                    back=card.back,
+                    front=note.front,
+                    back=note.back,
                 )
