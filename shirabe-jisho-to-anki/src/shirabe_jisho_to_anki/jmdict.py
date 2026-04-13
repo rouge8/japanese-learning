@@ -106,6 +106,8 @@ class Entry:
             return {godan_verb_to_masu_form(reading) for reading in self._all_readings}
         elif any(pos.startswith("suru verb") for pos in self._parts_of_speech):
             return {reading[:-2] + "します" for reading in self._all_readings}
+        else:
+            return None
 
     def is_noun_with_suru_verb(self) -> bool:
         """Whether or not the entry is a noun that takes the auxiliary verb suru."""
