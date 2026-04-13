@@ -11,3 +11,6 @@ run = "uv sync --active"
 [tasks.test]
 depends = [":setup"]
 run = "tox"
+
+[tasks.download_jmdict]
+run = "curl -sSL ftp://ftp.edrdg.org/pub/Nihongo//JMdict_e.gz | gunzip > data/JMDict_e"
