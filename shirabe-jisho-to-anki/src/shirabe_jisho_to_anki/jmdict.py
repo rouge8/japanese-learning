@@ -100,19 +100,29 @@ class Entry:
 
     def masu_forms(self) -> set[str] | None:
         """'masu' forms, if the entry is a verb."""
-        all_readings = self.kanji_readings + self.kana_readings
+        if "ichidan verb" in self._parts_of_speech:
+            return {reading[:-1] + "ます" for reading in self._all_readings}
+        elif any(pos.startswith("godan verb with") for pos in self._parts_of_speech):
+            return {godan_verb_to_masu_form(reading) for reading in self._all_readings}
+        elif any(pos.startswith("suru verb") for pos in self._parts_of_speech):
+            return {reading[:-2] + "します" for reading in self._all_readings}
 
+    def is_noun_with_suru_verb(self) -> bool:
+        """Whether or not the entry is a noun that takes the auxiliary verb suru."""
+        return (
+            "noun or participle which takes the aux. verb suru" in self._parts_of_speech
+        )
+
+    @property
+    def _all_readings(self) -> tuple[str, ...]:
+        return self.kanji_readings + self.kana_readings
+
+    @property
+    def _parts_of_speech(self) -> set[str]:
         parts_of_speech = itertools.chain.from_iterable(
             sense.parts_of_speech for sense in self.senses
         )
-        parts_of_speech = {pos.lower() for pos in parts_of_speech}
-
-        if "ichidan verb" in parts_of_speech:
-            return {reading[:-1] + "ます" for reading in all_readings}
-        elif any(pos.startswith("godan verb with") for pos in parts_of_speech):
-            return {godan_verb_to_masu_form(reading) for reading in all_readings}
-        elif any(pos.startswith("suru verb") for pos in parts_of_speech):
-            return {reading[:-2] + "します" for reading in all_readings}
+        return {pos.lower() for pos in parts_of_speech}
 
     @classmethod
     def from_element(cls, element: Element) -> Self:

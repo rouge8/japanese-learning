@@ -92,6 +92,9 @@ ignore = [
   "ISC003",
 ]
 
+[tool.ruff.lint]
+allowed-confusables = ["（", "）"]
+
 [tool.ruff.isort]
 force-single-line = true
 force-sort-within-sections = true

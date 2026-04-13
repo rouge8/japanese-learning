@@ -40,12 +40,16 @@ logger = get_logger()
     required=True,
     help="Name of the destination Anki deck",
 )
+@click.option(
+    "--dry-run", default=True, help="When True, don't actually create new cards"
+)
 def main(
     *,
     shirabe_jisho_csv: io.TextIOWrapper,
     jmdict_xml: str,
     anki_collection_path: str,
     anki_deck_name: str,
+    dry_run: bool,
 ) -> None:
     """
     Sync a CSV export from Shirabe Jisho to an Anki deck, checking for existing
@@ -73,4 +77,13 @@ def main(
         if anki_deck.has_card(card):
             logger.info("Card for bookmark already exists", bookmark=bookmark)
         else:
-            logger.info("Creating card for bookmark", bookmark=bookmark)
+            if not dry_run:
+                logger.info("Creating card for bookmark", bookmark=bookmark)
+                # TODO: Create the card
+            else:
+                logger.info(
+                    "Would create card for bookmark",
+                    bookmark=bookmark,
+                    front=card.front,
+                    back=card.back,
+                )

@@ -55,12 +55,22 @@ class Card:
 
     @classmethod
     def from_jmdict_entry(cls, entry: JMDictEntry) -> Self:
+        is_noun_with_suru_verb = entry.is_noun_with_suru_verb()
+
+        def format_reading(reading: str) -> str:
+            if is_noun_with_suru_verb:
+                return f"{reading}（する）"
+            else:
+                return reading
+
         front = ""
         if entry.kanji_readings:
-            front += " / ".join(entry.kanji_readings)
+            front += " / ".join(
+                format_reading(reading) for reading in entry.kanji_readings
+            )
         if front:
             front += " / "
-        front += " / ".join(entry.kana_readings)
+        front += " / ".join(format_reading(reading) for reading in entry.kana_readings)
 
         back_lines = ["; ".join(sense.meanings) for sense in entry.senses]
 
