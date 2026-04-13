@@ -33,7 +33,7 @@ class Deck:
         search terms.
         """
         return any(
-            re.search(rf"\b{term}", note)
+            re.search(rf"\b{term}\b", note)
             for term in card.search_terms()
             for note in self.notes
         )
