@@ -42,7 +42,9 @@ logger = get_logger()
 )
 @click.option("--anki-tag", required=True, help="Tag to apply to the new notes in Anki")
 @click.option(
-    "--dry-run", default=True, help="When True, don't actually create new notes"
+    "--dry-run/--no-dry-run",
+    default=True,
+    help="When True, don't actually create new notes",
 )
 def main(
     *,
@@ -81,7 +83,7 @@ def main(
         else:
             if not dry_run:
                 logger.info("Creating note for bookmark", bookmark=bookmark)
-                # TODO: Create the note
+                anki_deck.add_note(note, anki_tag)
             else:
                 logger.info(
                     "Would create note for bookmark",

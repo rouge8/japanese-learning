@@ -3,6 +3,7 @@ from typing import Self
 
 from anki.collection import Collection
 from anki.decks import DeckId
+from anki.models import NotetypeDict
 from attrs import define
 from attrs import field
 from attrs import frozen
@@ -15,6 +16,8 @@ from .jmdict import Entry as JMDictEntry
 class Deck:
     """An Anki deck."""
 
+    _collection: Collection
+    _model: NotetypeDict
     deck_id: DeckId
     name: str
     notes: set[str]
@@ -27,7 +30,8 @@ class Deck:
             collection.get_card(cid).note().fields[0]
             for cid in collection.decks.cids(deck_id)
         }
-        return cls(deck["id"], name, notes)
+        model = not_none(collection.models.by_name("Basic (and reversed card)"))
+        return cls(collection, model, deck["id"], name, notes)
 
     def has_note(self, new_note: Note) -> bool:
         """
@@ -39,6 +43,14 @@ class Deck:
             for term in new_note.search_terms()
             for note in self.notes
         )
+
+    def add_note(self, new_note: Note, tag: str) -> None:
+        """Add a new Note to the deck."""
+        anki_note = self._collection.new_note(self._model)
+        anki_note.fields[0] = new_note.front
+        anki_note.fields[1] = new_note.back
+        anki_note.add_tag(tag)
+        self._collection.add_note(anki_note, self.deck_id)
 
 
 @frozen(kw_only=True)

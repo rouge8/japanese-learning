@@ -1,5 +1,6 @@
 from anki.decks import DeckId
 import pytest
+from pytest_mock import MockerFixture
 
 from shirabe_jisho_to_anki.anki import Deck
 from shirabe_jisho_to_anki.anki import Note
@@ -8,8 +9,10 @@ from shirabe_jisho_to_anki.jmdict import Entry
 
 class TestDeck:
     @pytest.fixture
-    def deck(self) -> Deck:
+    def deck(self, mocker: MockerFixture) -> Deck:
         return Deck(
+            mocker.NonCallableMock(),
+            mocker.NonCallableMock(),
             DeckId(1),
             "Japanese",
             {
