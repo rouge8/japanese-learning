@@ -181,3 +181,23 @@ def debu_entry() -> Entry:
             ),
         ),
     )
+
+
+@pytest.fixture
+def muda_ni_suru_entry() -> Entry:
+    return Entry(
+        kanji_readings=("無駄にする",),
+        kana_readings=("むだにする",),
+        senses=(
+            Sense(
+                parts_of_speech=("suru verb - included",),
+                meanings=(
+                    "to render futile",
+                    "to bring to naught",
+                    "to waste",
+                    "to not make good use of",
+                ),
+                misc=frozenset(),
+            ),
+        ),
+    )
