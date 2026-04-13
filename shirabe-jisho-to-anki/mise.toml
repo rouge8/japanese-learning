@@ -1,0 +1,16 @@
+[tools]
+python = "3.14.0"
+
+[env]
+_.python.venv = { path = ".venv", create = true }
+
+[tasks.setup]
+sources = ["pyproject.toml", "uv.lock"]
+run = "uv sync --active"
+
+[tasks.test]
+depends = [":setup"]
+run = "tox"
+
+[tasks.download_jmdict]
+run = "curl -sSL ftp://ftp.edrdg.org/pub/Nihongo//JMdict_e.gz | gunzip > data/JMDict_e"
