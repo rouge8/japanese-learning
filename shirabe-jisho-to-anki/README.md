@@ -11,7 +11,9 @@
 shirabe-jisho-to-anki --jmdict-xml data/JMdict_e \
   --anki-collection ~/Library/Application\ Support/Anki2/User\ 1/collection.anki2 \
   --anki-deck Japanese \
-  --shirabe-jisho-csv ~/Downloads/Butter\ Chapter\ 1.csv
+  --anki-tag BUTTER \
+  --shirabe-jisho-csv ~/Downloads/Butter\ Chapter\ 1.csv \
+  --no-dry-run
 ```
 
 ## Testing and type-checking
