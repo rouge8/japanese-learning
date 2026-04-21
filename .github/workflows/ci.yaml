@@ -34,6 +34,7 @@ jobs:
 
     outputs:
       anki-extract-kanji: ${{ steps.changes.outputs.anki-extract-kanji }}
+      anki-newlines-to-br: ${{ steps.changes.outputs.anki-newlines-to-br }}
       shirabe-jisho-to-anki: ${{ steps.changes.outputs.shirabe-jisho-to-anki }}
       wanikani-burnt-kanji-to-anki: ${{ steps.changes.outputs.wanikani-burnt-kanji-to-anki }}
       wanikani-apprentice: ${{ steps.changes.outputs.wanikani-apprentice }}
@@ -46,6 +47,8 @@ jobs:
           filters: |
             anki-extract-kanji:
               - 'anki-extract-kanji/**'
+            anki-newlines-to-br:
+              - 'anki-newlines-to-br/**'
             shirabe-jisho-to-anki:
               - 'shirabe-jisho-to-anki/**'
             wanikani-burnt-kanji-to-anki:
@@ -83,6 +86,37 @@ jobs:
           cache-suffix: ${{ steps.cache-suffix.outputs.cache-suffix }}
       - name: tox
         run: uvx tox -c anki-extract-kanji
+
+  anki-newlines-to-br:
+    needs: files-changed
+    if: needs.files-changed.outputs.anki-newlines-to-br == 'true'
+    name: anki-newlines-to-br ${{ matrix.toxenv }}
+    runs-on: ubuntu-latest
+    env:
+      TOXENV: ${{ matrix.toxenv }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        toxenv:
+          - py,test-coverage
+          - mypy
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: Generate the cache suffix
+        id: cache-suffix
+        run: |
+          echo cache-suffix=${TOXENV//,/-} >> $GITHUB_OUTPUT
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: anki-newlines-to-br/pyproject.toml
+      - uses: astral-sh/setup-uv@v7
+        with:
+          working-directory: anki-newlines-to-br
+          cache-suffix: ${{ steps.cache-suffix.outputs.cache-suffix }}
+      - name: tox
+        run: uvx tox -c anki-newlines-to-br
 
   shirabe-jisho-to-anki:
     needs: files-changed
