@@ -108,4 +108,4 @@ class Note:
             for sense in entry.senses
         ]
 
-        return cls(entry=entry, front=front, back="\n".join(back_lines))
+        return cls(entry=entry, front=front, back="<br>".join(back_lines))

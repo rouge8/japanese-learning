@@ -40,8 +40,8 @@ class TestNote:
         assert note.front == "会う / 逢う / あう"
         assert (
             note.back
-            == "to meet; to encounter; to see\nto have an accident; "
-            + "to have a bad experience"
+            == "to meet; to encounter; to see"
+            + "<br>to have an accident; to have a bad experience"
         )
 
     def test_from_jmdict_entry_suru_verb(self, kouji_entry: Entry) -> None:
