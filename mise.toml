@@ -6,6 +6,7 @@ UV_PREVIEW_FEATURES = "add-bounds"
 [monorepo]
 config_roots = [
   "anki-extract-kanji",
+  "shirabe-jisho-to-anki",
   "wanikani-apprentice",
   "wanikani-burnt-kanji-to-anki",
 ]
