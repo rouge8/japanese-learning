@@ -41,9 +41,6 @@ Home = "https://github.com/rouge8/japanese-learning/tree/main/shirabe-jisho-to-a
 [tool.hatch.version]
 path = "src/shirabe_jisho_to_anki/__init__.py"
 
-[tool.uv]
-add-bounds = "exact"
-
 [tool.pytest]
 minversion = "9.0"
 addopts = [

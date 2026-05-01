@@ -41,9 +41,6 @@ Home = "https://github.com/rouge8/wanikani-burnt-kanji-to-anki"
 [tool.hatch.version]
 path = "src/wanikani_burnt_kanji_to_anki/__init__.py"
 
-[tool.uv]
-add-bounds = "exact"
-
 [tool.pytest]
 minversion = "9.0"
 addopts = [

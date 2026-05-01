@@ -34,9 +34,6 @@ Home = "https://github.com/rouge8/anki-extract-kanji"
 [tool.hatch.version]
 path = "src/anki_extract_kanji/__init__.py"
 
-[tool.uv]
-add-bounds = "exact"
-
 [tool.pytest]
 minversion = "9.0"
 addopts = [
