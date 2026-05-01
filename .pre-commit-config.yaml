@@ -45,6 +45,10 @@ repos:
         files: anki-extract-kanji/pyproject.toml
         args: [--project, anki-extract-kanji]
       - id: uv-lock
+        name: uv-lock (anki-newlines-to-br)
+        files: anki-newlines-to-br/pyproject.toml
+        args: [--project, anki-newlines-to-br]
+      - id: uv-lock
         name: uv-lock (shirabe-jisho-to-anki)
         files: shirabe-jisho-to-anki/pyproject.toml
         args: [--project, shirabe-jisho-to-anki]
