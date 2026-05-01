@@ -41,12 +41,15 @@ repos:
     rev: 0.11.7
     hooks:
       - id: uv-lock
+        name: uv-lock (anki-extract-kanji)
         files: anki-extract-kanji/pyproject.toml
         args: [--project, anki-extract-kanji]
       - id: uv-lock
+        name: uv-lock (shirabe-jisho-to-anki)
         files: shirabe-jisho-to-anki/pyproject.toml
         args: [--project, shirabe-jisho-to-anki]
       - id: uv-lock
+        name: uv-lock (wanikani-burn-kanji-to-anki)
         files: wanikani-burnt-kanji-to-anki/pyproject.toml
         args: [--project, wanikani-burnt-kanji-to-anki]
   - repo: https://github.com/PyCQA/doc8
