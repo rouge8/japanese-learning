@@ -8,6 +8,9 @@ _.python.venv = { path = ".venv", create = true }
 sources = ["pyproject.toml", "uv.lock"]
 run = "uv sync --active"
 
+[tasks.upgrade-deps]
+run = "uv sync --upgrade --all-groups"
+
 [tasks.test]
 depends = [":setup"]
 run = "tox"

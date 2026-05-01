@@ -6,5 +6,8 @@ flyctl = "latest"
 [tasks.setup]
 run = "true"
 
+[tasks.upgrade-deps]
+run = "cargo update"
+
 [tasks.test]
 run = "cargo nextest run"

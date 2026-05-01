@@ -21,6 +21,9 @@ run = [
   "prek install",
 ]
 
+[tasks.upgrade-deps]
+depends = "//...:upgrade-deps"
+
 [tasks.test]
 depends = "//...:test"
 
