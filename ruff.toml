@@ -1,0 +1,48 @@
+target-version = "py314"
+
+[lint]
+select = [
+  "E",
+  "F",
+  "W",
+  "I",
+  "B",
+  "B90",
+  "D2",
+  "D213",
+  "D3",
+  "D404",
+  "C4",
+  "UP",
+  "ISC",
+  "PGH",
+  "RUF",
+]
+ignore = [
+  # 1 blank line required before class docstring
+  "D203",
+  # Our docstring style allows for a multi-line summary, e.g.:
+  #
+  #"""
+  # Prevent database use without the appropriate fixture/marker, used
+  # automatically.
+  #
+  # Additional content goes here.
+  #"""
+  "D205",
+  # Inverse of D213
+  "D212",
+  # Explicitly concatenated string should be implicitly concatenated
+  "ISC003",
+]
+
+# Japanese parentheses
+allowed-confusables = ["（", "）"]
+
+[lint.isort]
+force-single-line = true
+force-sort-within-sections = true
+order-by-type = false
+
+[lint.flake8-implicit-str-concat]
+allow-multiline = false
