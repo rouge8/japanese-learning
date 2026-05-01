@@ -8,7 +8,12 @@ from shirabe_jisho_to_anki.jmdict import MultipleEntriesForBookmark
 from shirabe_jisho_to_anki.jmdict import Sense
 from shirabe_jisho_to_anki.shirabe_jisho import Bookmark
 
-EMPTY_SENSES = (Sense(parts_of_speech=(), meanings=(), misc=frozenset()),)
+EMPTY_SENSES = (
+    Sense(
+        parts_of_speech=(),
+        meanings=(),
+    ),
+)
 
 
 class TestJMDict:
@@ -57,7 +62,6 @@ class TestJMDict:
                     Sense(
                         parts_of_speech=("noun",),
                         meanings=("pack", "packet", "carton"),
-                        misc=frozenset(),
                     ),
                 ),
             ),
@@ -68,7 +72,6 @@ class TestJMDict:
                     Sense(
                         parts_of_speech=("noun",),
                         meanings=("puck",),
-                        misc=frozenset(),
                     ),
                 ),
             ),
@@ -162,17 +165,53 @@ class TestJMDict:
 
 
 class TestEntry:
-    def test_masu_forms_ichidan_verb(self, ageru_to_deep_fry_entry: Entry) -> None:
-        assert ageru_to_deep_fry_entry.masu_forms() == {"揚げます"}
+    def test_kanji_masu_forms_ichidan_verb(
+        self, ageru_to_deep_fry_entry: Entry
+    ) -> None:
+        assert ageru_to_deep_fry_entry.kanji_masu_forms() == {"揚げます"}
 
-    def test_masu_forms_godan_verb(self, aou_entry: Entry) -> None:
-        assert aou_entry.masu_forms() == {"会います", "逢います"}
+    def test_kanji_masu_forms_godan_verb(self, aou_entry: Entry) -> None:
+        assert aou_entry.kanji_masu_forms() == {"会います", "逢います"}
 
-    def test_masu_forms_suru_verb(self, muda_ni_suru_entry: Entry) -> None:
-        assert muda_ni_suru_entry.masu_forms() == {"無駄にします"}
+    def test_kanji_masu_forms_suru_verb(self, muda_ni_suru_entry: Entry) -> None:
+        assert muda_ni_suru_entry.kanji_masu_forms() == {"無駄にします"}
 
-    def test_masu_forms_non_verb(self, tatemono_entry: Entry) -> None:
-        assert tatemono_entry.masu_forms() is None
+    def test_kanji_masu_forms_non_verb(self, tatemono_entry: Entry) -> None:
+        assert tatemono_entry.kanji_masu_forms() is None
+
+    def test_kana_masu_forms_ichidan_verb(self) -> None:
+        entry = Entry(
+            kanji_readings=(),
+            kana_readings=("ふぁける",),
+            senses=(
+                Sense(
+                    parts_of_speech=("ichidan verb",),
+                    meanings=("my fake verb",),
+                ),
+            ),
+        )
+        assert entry.kana_masu_forms() == {"ふぁけます"}
+
+    def test_kana_masu_forms_godan_verb(
+        self, nomeru_to_fall_forward_entry: Entry
+    ) -> None:
+        assert nomeru_to_fall_forward_entry.kana_masu_forms() == {"のめります"}
+
+    def test_kana_masu_forms_suru_verb(self) -> None:
+        entry = Entry(
+            kanji_readings=(),
+            kana_readings=("ファくする", "ふぁくする"),
+            senses=(
+                Sense(
+                    parts_of_speech=("suru verb - included",),
+                    meanings=("my fake verb",),
+                ),
+            ),
+        )
+        assert entry.kana_masu_forms() == {"ふぁくします", "ファくします"}
+
+    def test_kana_masu_forms_non_verb(self, debu_entry: Entry) -> None:
+        assert debu_entry.kana_masu_forms() is None
 
     @pytest.mark.parametrize(
         "entry_fixture, expected", [("kouji_entry", True), ("tatemono_entry", False)]

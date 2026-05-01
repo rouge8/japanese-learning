@@ -23,7 +23,6 @@ def iku_entry() -> Entry:
                     "to head (towards)",
                     "to leave (for)",
                 ),
-                misc=frozenset(),
             ),
             Sense(
                 parts_of_speech=(
@@ -35,7 +34,6 @@ def iku_entry() -> Entry:
                     "to travel across",
                     "to walk along (e.g. a road)",
                 ),
-                misc=frozenset(),
             ),
         ),
     )
@@ -53,7 +51,6 @@ def ageru_to_raise_entry() -> Entry:
                     "transitive verb",
                 ),
                 meanings=("to raise", "to elevate"),
-                misc=frozenset(),
             ),
             Sense(
                 parts_of_speech=(
@@ -61,7 +58,6 @@ def ageru_to_raise_entry() -> Entry:
                     "transitive verb",
                 ),
                 meanings=("to give",),
-                misc=frozenset(),
             ),
         ),
     )
@@ -79,7 +75,6 @@ def ageru_to_deep_fry_entry() -> Entry:
                     "to make deep-fried food",
                 ),
                 meanings=("to raise", "to elevate"),
-                misc=frozenset(),
             ),
             Sense(
                 parts_of_speech=(
@@ -90,7 +85,6 @@ def ageru_to_deep_fry_entry() -> Entry:
                     "to launch (fireworks, etc.)",
                     "to hoise (e.g. a flag)",
                 ),
-                misc=frozenset(),
             ),
         ),
     )
@@ -105,7 +99,6 @@ def tatemono_entry() -> Entry:
             Sense(
                 parts_of_speech=("noun",),
                 meanings=("building",),
-                misc=frozenset(),
             ),
         ),
     )
@@ -123,7 +116,6 @@ def kouji_entry() -> Entry:
                     "transitive verb",
                 ),
                 meanings=("construction work",),
-                misc=frozenset(),
             ),
         ),
     )
@@ -145,7 +137,6 @@ def aou_entry() -> Entry:
                     "to encounter",
                     "to see",
                 ),
-                misc=frozenset(),
             ),
             Sense(
                 parts_of_speech=(
@@ -156,7 +147,6 @@ def aou_entry() -> Entry:
                     "to have an accident",
                     "to have a bad experience",
                 ),
-                misc=frozenset(),
             ),
         ),
     )
@@ -177,7 +167,6 @@ def debu_entry() -> Entry:
                     "fat",
                     "chubby",
                 ),
-                misc=frozenset(),
             ),
         ),
     )
@@ -197,7 +186,38 @@ def muda_ni_suru_entry() -> Entry:
                     "to waste",
                     "to not make good use of",
                 ),
-                misc=frozenset(),
+            ),
+        ),
+    )
+
+
+@pytest.fixture
+def nomeru_to_be_able_to_drink_entry() -> Entry:
+    return Entry(
+        kanji_readings=("飲める",),
+        kana_readings=("のめる",),
+        senses=(
+            Sense(
+                parts_of_speech=("ichidan verb",),
+                meanings=("to be able to drink",),
+            ),
+            Sense(
+                parts_of_speech=("ichidan verb",),
+                meanings=("to be worth drinking",),
+            ),
+        ),
+    )
+
+
+@pytest.fixture
+def nomeru_to_fall_forward_entry() -> Entry:
+    return Entry(
+        kanji_readings=(),
+        kana_readings=("のめる",),
+        senses=(
+            Sense(
+                parts_of_speech=("godan verb with 'ru' ending", "intransitive verb"),
+                meanings=("to fall forward (of a person)", "to tumble forward"),
             ),
         ),
     )

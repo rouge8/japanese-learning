@@ -98,14 +98,23 @@ class Entry:
     kana_readings: tuple[str, ...]
     senses: tuple[Sense, ...]
 
-    def masu_forms(self) -> set[str] | None:
-        """'masu' forms of Kanji readings, if the entry is a verb."""
+    def kanji_masu_forms(self) -> set[str] | None:
+        """'masu' forms of the Kanji readings, if the entry is a verb."""
+        return self._masu_forms(self.kanji_readings)
+
+    def kana_masu_forms(self) -> set[str] | None:
+        """'masu' forms of the Kana readings, if the entry is a verb."""
+        return self._masu_forms(self.kana_readings)
+
+    def _masu_forms(self, readings: tuple[str, ...]) -> set[str] | None:
+        """'masu' forms of the given readings, if the entry is a verb."""
         if "ichidan verb" in self._parts_of_speech:
-            return {reading[:-1] + "ます" for reading in self.kanji_readings}
+            return {reading[:-1] + "ます" for reading in readings}
         elif any(pos.startswith("godan verb") for pos in self._parts_of_speech):
-            return {godan_verb_to_masu_form(reading) for reading in self.kanji_readings}
+            return {godan_verb_to_masu_form(reading) for reading in readings}
+        # "suru verb - included" or "suru verb - special class"
         elif any(pos.startswith("suru verb") for pos in self._parts_of_speech):
-            return {reading[:-2] + "します" for reading in self.kanji_readings}
+            return {reading[:-2] + "します" for reading in readings}
         else:
             return None
 
@@ -183,7 +192,7 @@ class Sense:
 
     parts_of_speech: tuple[str, ...]
     meanings: tuple[str, ...]
-    misc: frozenset[str]
+    misc: frozenset[str] = Factory(frozenset)
 
     @classmethod
     def from_element(cls, element: Element) -> Self:

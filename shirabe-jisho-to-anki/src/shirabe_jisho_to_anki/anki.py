@@ -10,6 +10,7 @@ from attrs import frozen
 
 from .helpers import not_none
 from .jmdict import Entry as JMDictEntry
+from .jp_helpers import has_kanji
 
 
 @define
@@ -38,11 +39,16 @@ class Deck:
         Whether a note already exists in a deck, as defined by the note's
         search terms.
         """
-        return any(
-            re.search(rf"\b{term}\b", note)
-            for term in new_note.search_terms()
-            for note in self.notes
-        )
+        for note in self.notes:
+            if has_kanji(note):
+                for term in new_note.kanji_search_terms():
+                    if re.search(rf"\b{term}\b", note):
+                        return True
+            else:
+                for term in new_note.kana_search_terms():
+                    if re.search(rf"\b{term}\b", note):
+                        return True
+        return False
 
     def add_note(self, new_note: Note, tag: str) -> None:
         """Add a new Note to the deck."""
@@ -61,22 +67,32 @@ class Note:
     front: str
     back: str
 
-    def search_terms(self) -> set[str]:
-        """Search terms to use when matching existing notes."""
-        masu_forms = self._entry.masu_forms() or set()
-        # Note that we don't use the kana readings because they will match many
-        # more unrelated notes. For example:
-        #
-        # 揚げる / あげる
-        #
-        # would also match:
-        #
-        # 挙げる / あげる
-        #
-        # and:
-        #
-        # 上げる / あげる
+    def kanji_search_terms(self) -> set[str]:
+        """Search terms based on Kanji readings to use when matching existing notes."""
+        masu_forms = self._entry.kanji_masu_forms() or set()
         return set(self._entry.kanji_readings) | masu_forms
+
+    def kana_search_terms(self) -> set[str]:
+        """
+        Search terms based on Kana readings to use when matching existing notes.
+
+        Note that we don't use the Kana readings when Kanji readings exist
+        because they will match many more unrelated notes. For example:
+
+        揚げる / あげる
+
+        would also match:
+
+        挙げる / あげる
+
+        and:
+
+        上げる / あげる
+        """
+        if self._entry.kanji_readings:
+            return set()
+        masu_forms = self._entry.kana_masu_forms() or set()
+        return set(self._entry.kana_readings) | masu_forms
 
     @classmethod
     def from_jmdict_entry(cls, entry: JMDictEntry) -> Self:

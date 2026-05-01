@@ -33,6 +33,60 @@ class TestDeck:
     ) -> None:
         assert deck.has_note(Note.from_jmdict_entry(ageru_to_deep_fry_entry)) is False
 
+    def test_has_note_match_kanji_reading_only(
+        self, deck: Deck, nomeru_to_be_able_to_drink_entry: Entry
+    ) -> None:
+        """
+        If an Entry has Kanji readings, it will only match notes with Kanji
+        readings.
+        """
+        deck.notes.add("飲める / のめる")
+
+        assert (
+            deck.has_note(Note.from_jmdict_entry(nomeru_to_be_able_to_drink_entry))
+            is True
+        )
+
+    def test_has_note_no_match_kanji_reading_only(
+        self, deck: Deck, nomeru_to_be_able_to_drink_entry: Entry
+    ) -> None:
+        """
+        If an Entry has Kanji readings, it will not match notes without Kanji
+        readings.
+        """
+        deck.notes.add("のめる")
+
+        assert (
+            deck.has_note(Note.from_jmdict_entry(nomeru_to_be_able_to_drink_entry))
+            is False
+        )
+
+    def test_has_note_match_kana_reading_only(
+        self, deck: Deck, nomeru_to_fall_forward_entry: Entry
+    ) -> None:
+        """
+        If an Entry has Kanji readings, it will only match notes with Kanji
+        readings.
+        """
+        deck.notes.add("のめる")
+
+        assert (
+            deck.has_note(Note.from_jmdict_entry(nomeru_to_fall_forward_entry)) is True
+        )
+
+    def test_has_note_no_match_kana_reading_only(
+        self, deck: Deck, nomeru_to_fall_forward_entry: Entry
+    ) -> None:
+        """
+        If an Entry has Kanji readings, it will not match notes without Kanji
+        readings.
+        """
+        deck.notes.add("飲める / のめる")
+
+        assert (
+            deck.has_note(Note.from_jmdict_entry(nomeru_to_fall_forward_entry)) is False
+        )
+
 
 class TestNote:
     def test_from_jmdict_entry(self, aou_entry: Entry) -> None:
@@ -54,10 +108,10 @@ class TestNote:
         assert note.front == "デブ / でぶ"
         assert note.back == "fat; chubby"
 
-    def test_search_terms_verb(self, ageru_to_deep_fry_entry: Entry) -> None:
+    def test_kanji_search_terms_verb(self, ageru_to_deep_fry_entry: Entry) -> None:
         note = Note.from_jmdict_entry(ageru_to_deep_fry_entry)
-        assert note.search_terms() == {"揚げる", "揚げます"}
+        assert note.kanji_search_terms() == {"揚げる", "揚げます"}
 
-    def test_search_terms_non_verb(self, tatemono_entry: Entry) -> None:
+    def test_kanji_search_terms_non_verb(self, tatemono_entry: Entry) -> None:
         note = Note.from_jmdict_entry(tatemono_entry)
-        assert note.search_terms() == {"建物"}
+        assert note.kanji_search_terms() == {"建物"}

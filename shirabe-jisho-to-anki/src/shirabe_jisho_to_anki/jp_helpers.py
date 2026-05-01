@@ -1,3 +1,13 @@
+import re
+
+_KANJI_RE = re.compile(r"[\u4E00-\u9FFF]")
+
+
+def has_kanji(s: str) -> bool:
+    """Whether or not a string contains Kanji."""
+    return bool(re.search(_KANJI_RE, s))
+
+
 def godan_verb_to_masu_form(verb: str) -> str:
     """Convert a dictionary-form Godan verb to its masu-form."""
     match verb[-1]:
