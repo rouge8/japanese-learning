@@ -23,6 +23,9 @@ run = [
 
 [tasks.upgrade-deps]
 depends = "//...:upgrade-deps"
+run = [
+  "prek auto-update",
+]
 
 [tasks.test]
 depends = "//...:test"
