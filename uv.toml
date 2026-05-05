@@ -1,2 +1,3 @@
 add-bounds = "exact"
 exclude-newer = "1 week"
+exclude-newer-package = { pyreqwest = "1 day" }
