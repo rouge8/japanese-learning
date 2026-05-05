@@ -3,11 +3,6 @@
   "extends": [
     "config:recommended"
   ],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "branchTopic": "lock-file-maintenance-{{packageFile}}",
-    "commitMessageExtra": "{{packageFile}}"
-  },
   "minimumReleaseAge": "7 days",
   "packageRules": [
     {
