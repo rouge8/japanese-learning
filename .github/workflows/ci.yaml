@@ -14,19 +14,19 @@ jobs:
     name: prek
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405  # v6.2.0
+      - uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9  # v1
         with:
           components: clippy
-      - uses: dtolnay/rust-toolchain@nightly
+      - uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9  # v1
         with:
           components: rustfmt
-      - uses: Swatinem/rust-cache@v2.9.1
+      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4  # v2.9.1
         with:
           workspaces: |
             wanikani-apprentice
-      - uses: j178/prek-action@v2
+      - uses: j178/prek-action@6ad80277337ad479fe43bd70701c3f7f8aa74db3  # v2.0.3
 
   files-changed:
     name: Detect which files changed
@@ -37,8 +37,8 @@ jobs:
       wanikani-apprentice: ${{ steps.filter.outputs.wanikani-apprentice }}
 
     steps:
-      - uses: actions/checkout@v6
-      - uses: dorny/paths-filter@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+      - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d  # v4.0.1
         id: filter
         with:
           list-files: json
@@ -74,15 +74,15 @@ jobs:
           - mypy
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
       - name: Generate the cache suffix
         id: cache-suffix
         run: |
           echo cache-suffix=${TOXENV//,/-} >> $GITHUB_OUTPUT
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405  # v6.2.0
         with:
           python-version-file: ${{ matrix.project }}/pyproject.toml
-      - uses: astral-sh/setup-uv@v8.1.0
+      - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b  # v8.1.0
         with:
           working-directory: ${{ matrix.project }}
           cache-suffix: ${{ steps.cache-suffix.outputs.cache-suffix }}
@@ -96,22 +96,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+      - uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9  # v1
         with:
           components: llvm-tools-preview
       - name: Install cargo-llvm-cov
-        uses: taiki-e/install-action@cargo-llvm-cov
+        uses: taiki-e/install-action@7ea35f098a7369cd23488403f58be9c491a6c55f  # v2.77.0
       - name: Install cargo-nextest
-        uses: taiki-e/install-action@nextest
-      - uses: Swatinem/rust-cache@v2.9.1
+        uses: taiki-e/install-action@7ea35f098a7369cd23488403f58be9c491a6c55f  # v2.77.0
+      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4  # v2.9.1
         with:
           workspaces: |
             wanikani-apprentice
       - name: Run tests
         run: cd wanikani-apprentice && cargo llvm-cov nextest --no-fail-fast --html --color=always
       - name: Upload HTML coverage report
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
           name: coverage-report
           path: wanikani-apprentice/target/llvm-cov/html
@@ -130,13 +130,13 @@ jobs:
     concurrency: wanikani-apprentice-prod
 
     steps:
-      - uses: actions/checkout@v6
-      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+      - uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1  # 1.6
       - run: cd wanikani-apprentice && flyctl deploy --remote-only --env SENTRY_RELEASE=$(git describe --always --abbrev=40)
         env:
           FLY_API_TOKEN: ${{ secrets.WANIKANI_APPRENTICE_FLY_API_TOKEN }}
       - name: Sentry Release
-        uses: getsentry/action-release@v3.6.0
+        uses: getsentry/action-release@5657c9e888b4e2cc85f4d29143ea4131fde4a73a  # v3.6.0
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: rouge8
