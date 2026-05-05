@@ -1,6 +1,6 @@
-from httpx import Client
-from httpx import WSGITransport
 import pytest
+from pyreqwest.client import SyncClientBuilder
+from pyreqwest.middleware.asgi import ASGITestMiddleware
 
 from wanikani_burnt_kanji_to_anki.wanikani import WaniKaniAPIClient
 
@@ -20,12 +20,14 @@ def mock_wanikani(base_url: str) -> MockWaniKaniAPI:
 @pytest.fixture
 def api_client(base_url: str, mock_wanikani: MockWaniKaniAPI) -> WaniKaniAPIClient:
     """A WaniKaniAPIClient"""
-    transport = WSGITransport(app=mock_wanikani.app)
-    return WaniKaniAPIClient(
-        "fake-key",
-        base_url=base_url,
-        client=Client(transport=transport),
-    )
+
+    middleware = ASGITestMiddleware(mock_wanikani.app)
+    with SyncClientBuilder().with_middleware(middleware).build() as client:
+        return WaniKaniAPIClient(
+            "fake-key",
+            base_url=base_url,
+            client=client,
+        )
 
 
 @pytest.fixture(autouse=True)
