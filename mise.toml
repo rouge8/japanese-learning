@@ -14,6 +14,7 @@ config_roots = [
 
 [tools]
 prek = "latest"
+"pipx:gha-update" = "latest"
 
 [tasks.setup]
 depends = "//...:setup"
@@ -25,6 +26,7 @@ run = [
 depends = "//...:upgrade-deps"
 run = [
   "prek auto-update",
+  "gha-update",
 ]
 
 [tasks.test]
