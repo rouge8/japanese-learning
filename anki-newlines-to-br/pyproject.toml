@@ -45,6 +45,7 @@ add-bounds = "exact"
 [tool.pytest]
 minversion = "9.0"
 addopts = [
+  "-v",
   "-ra",
   "--strict-config",
   "--strict-markers",

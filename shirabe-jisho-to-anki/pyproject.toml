@@ -44,6 +44,7 @@ path = "src/shirabe_jisho_to_anki/__init__.py"
 [tool.pytest]
 minversion = "9.0"
 addopts = [
+  "-v",
   "-ra",
   "--strict-config",
   "--strict-markers",

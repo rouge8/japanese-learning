@@ -44,6 +44,7 @@ path = "src/wanikani_burnt_kanji_to_anki/__init__.py"
 [tool.pytest]
 minversion = "9.0"
 addopts = [
+  "-v",
   "-ra",
   "--strict-config",
   "--strict-markers",
