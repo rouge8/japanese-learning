@@ -1,8 +1,19 @@
+from collections.abc import Iterable
 import re
 
 from anki.collection import Collection
 from collections import Counter
 import click
+
+
+def unknown_kanji(known_kanji: set[str], vocab: Iterable[str]) -> Counter[str]:
+    new_kanji: Counter[str] = Counter()
+    for term in vocab:
+        for match in re.finditer(r"[\u4E00-\u9FFF]", term):
+            found_kanji = match.group()
+            if found_kanji not in known_kanji:
+                new_kanji[found_kanji] += 1
+    return new_kanji
 
 
 @click.command()
@@ -48,18 +59,12 @@ def main(collection_path: str, vocab_deck_name: str, kanji_deck_name: str) -> No
         collection.get_card(cid).note().fields[0]
         for cid in collection.decks.cids(kanji_deck["id"])
     }
-
-    new_kanji: Counter[str] = Counter()
-    for cid in collection.decks.cids(vocab_deck["id"]):
-        note_text = collection.get_card(cid).note().fields[0]
-
-        for match in re.finditer(r"[\u4E00-\u9FFF]", note_text):
-            found_kanji = match.group()
-            if found_kanji not in known_kanji:
-                new_kanji[found_kanji] += 1
-
-    for nk, _count in new_kanji.most_common():
-        print(nk)
+    vocab = (
+        collection.get_card(cid).note().fields[0]
+        for cid in collection.decks.cids(vocab_deck["id"])
+    )
+    for nk, _count in unknown_kanji(known_kanji, vocab).most_common():
+        print(nk, _count)
 
 
 if __name__ == "__main__":
