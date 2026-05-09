@@ -1,7 +1,7 @@
 [run]
 branch = True
 source =
-    shirabe_jisho_to_anki
+    anki_newlines_to_br
     tests
 
 [report]
