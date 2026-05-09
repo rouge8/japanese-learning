@@ -1,6 +1,7 @@
 import re
 
 from anki.collection import Collection
+from collections import Counter
 import click
 
 
@@ -48,16 +49,16 @@ def main(collection_path: str, vocab_deck_name: str, kanji_deck_name: str) -> No
         for cid in collection.decks.cids(kanji_deck["id"])
     }
 
-    new_kanji: set[str] = set()
+    new_kanji: Counter[str] = Counter()
     for cid in collection.decks.cids(vocab_deck["id"]):
         note_text = collection.get_card(cid).note().fields[0]
 
         for match in re.finditer(r"[\u4E00-\u9FFF]", note_text):
             found_kanji = match.group()
             if found_kanji not in known_kanji:
-                new_kanji.add(found_kanji)
+                new_kanji[found_kanji] += 1
 
-    for nk in sorted(new_kanji):
+    for nk, _count in new_kanji.most_common():
         print(nk)
 
 
