@@ -1,10 +1,11 @@
+from pyreqwest.response import SyncResponse
 from collections.abc import Iterable
 import time
 import typing
 
 import attrs
-import httpx
 import structlog
+from pyreqwest.client import SyncClient, SyncClientBuilder
 
 log = structlog.get_logger()
 
@@ -30,32 +31,34 @@ _KANJI: dict[int, Kanji] = {}
 class WaniKaniAPIClient:
     api_key: str = attrs.field(repr=False)
     base_url: str = "https://api.wanikani.com/v2"
-    client: httpx.Client = attrs.field(factory=httpx.Client)
-
-    def __attrs_post_init__(self) -> None:
-        self.client.headers.update({"Wanikani-Revision": "20170710"})
+    client: SyncClient = attrs.Factory(lambda: SyncClientBuilder().build())
 
     def _request(
         self,
         path: str,
         params: dict[str, str] | None = None,
-    ) -> httpx.Response:
+    ) -> SyncResponse:
         log.info("requesting", path=path, params=params)
         start = time.time()
-        resp = self.client.get(
-            f"{self.base_url}/{path}",
-            params=params,
-            headers={"Authorization": f"Bearer {self.api_key}"},
+        resp = (
+            (
+                self.client.get(f"{self.base_url}/{path}")
+                .header("Wanikani-Revision", "20170710")
+                .bearer_auth(self.api_key)
+                .query(params or {})
+            )
+            .build()
+            .send()
         )
         end = time.time()
         log.info(
             "requested",
             path=path,
             params=params,
-            status_code=resp.status_code,
+            status_code=resp.status,
             duration=end - start,
         )
-        resp.raise_for_status()
+        resp.error_for_status()
         return resp
 
     def _paginated_request(
