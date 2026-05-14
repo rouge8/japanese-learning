@@ -39,9 +39,6 @@ Home = "https://github.com/rouge8/japanese-learning/tree/main/anki-newlines-to-b
 [tool.hatch.version]
 path = "src/anki_newlines_to_br/__init__.py"
 
-[tool.uv]
-add-bounds = "exact"
-
 [tool.pytest]
 minversion = "9.0"
 addopts = [
