@@ -64,7 +64,7 @@ def main(collection_path: str, vocab_deck_name: str, kanji_deck_name: str) -> No
         for cid in collection.decks.cids(vocab_deck["id"])
     )
     for nk, _count in unknown_kanji(known_kanji, vocab).most_common():
-        print(nk, _count)
+        print(nk)
 
 
 if __name__ == "__main__":
