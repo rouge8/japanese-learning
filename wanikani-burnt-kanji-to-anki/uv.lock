@@ -8,6 +8,7 @@ exclude-newer-span = "P1W"
 
 [options.exclude-newer-package]
 pyreqwest = { timestamp = "0001-01-01T00:00:00Z", span = "P1D" }
+anki = { timestamp = "0001-01-01T00:00:00Z", span = "P1D" }
 
 [[package]]
 name = "attrs"
