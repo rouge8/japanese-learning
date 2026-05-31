@@ -22,7 +22,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "coverage~=7.11.0",
-    "mypy~=1.18.2",
+    "mypy~=2.1.0",
     "pytest~=9.0.1",
     "pytest-cov~=7.0.0",
     "pytest-randomly~=4.0.1",
