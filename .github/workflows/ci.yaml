@@ -14,7 +14,7 @@ jobs:
     name: prek
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405  # v6.2.0
       - uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9  # v1
         with:
@@ -28,7 +28,7 @@ jobs:
         with:
           workspaces: |
             wanikani-apprentice
-      - uses: j178/prek-action@6ad80277337ad479fe43bd70701c3f7f8aa74db3  # v2.0.3
+      - uses: j178/prek-action@bdca6f102f98e2b4c7029491a53dfd366469e33d  # v2.0.4
 
   files-changed:
     name: Detect which files changed
@@ -39,7 +39,7 @@ jobs:
       wanikani-apprentice: ${{ steps.filter.outputs.wanikani-apprentice }}
 
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
       - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d  # v4.0.1
         id: filter
         with:
@@ -76,7 +76,7 @@ jobs:
           - mypy
 
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
       - name: Generate the cache suffix
         id: cache-suffix
         run: |
@@ -84,7 +84,7 @@ jobs:
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405  # v6.2.0
         with:
           python-version-file: ${{ matrix.project }}/pyproject.toml
-      - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b  # v8.1.0
+      - uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39  # v8.2.0
         with:
           working-directory: ${{ matrix.project }}
           cache-suffix: ${{ steps.cache-suffix.outputs.cache-suffix }}
@@ -98,17 +98,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
       - uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9  # v1
         with:
           toolchain: stable
           components: llvm-tools-preview
       - name: Install cargo-llvm-cov
-        uses: taiki-e/install-action@7ea35f098a7369cd23488403f58be9c491a6c55f  # v2.77.0
+        uses: taiki-e/install-action@4bc351f7f2614e48088386e2a0ad917ca3a7e4ba  # v2.81.5
         with:
           tool: cargo-llvm-cov
       - name: Install cargo-nextest
-        uses: taiki-e/install-action@7ea35f098a7369cd23488403f58be9c491a6c55f  # v2.77.0
+        uses: taiki-e/install-action@4bc351f7f2614e48088386e2a0ad917ca3a7e4ba  # v2.81.5
         with:
           tool: cargo-nextest
       - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4  # v2.9.1
@@ -137,13 +137,13 @@ jobs:
     concurrency: wanikani-apprentice-prod
 
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
       - uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1  # 1.6
       - run: cd wanikani-apprentice && flyctl deploy --remote-only --env SENTRY_RELEASE=$(git describe --always --abbrev=40)
         env:
           FLY_API_TOKEN: ${{ secrets.WANIKANI_APPRENTICE_FLY_API_TOKEN }}
       - name: Sentry Release
-        uses: getsentry/action-release@5657c9e888b4e2cc85f4d29143ea4131fde4a73a  # v3.6.0
+        uses: getsentry/action-release@ff07929a6537bac57790c3451cf4d364aca38528  # v3.7.0
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: rouge8
