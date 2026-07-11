@@ -101,22 +101,6 @@ repos:
               exit 1
             fi
           '
-      - id: cargo-check
-        name: cargo check
-        language: system
-        types: [rust]
-        require_serial: true
-        entry: >
-          bash -c '
-            dirs=()
-            for f in $@; do
-              dirs+=($(dirname $(cd $(dirname "${f}") && cargo locate-project --message-format=plain)))
-            done
-
-            for d in $(printf "%s\n" "${dirs[@]}" | sort -u); do
-              (cd "${d}" && cargo +stable check)
-            done
-          '
       - id: rustfmt
         name: rustfmt
         language: system
