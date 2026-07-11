@@ -1,5 +1,8 @@
 experimental_monorepo_root = true
 
+[settings]
+minimum_release_age = "7d"
+
 [env]
 UV_PREVIEW_FEATURES = "add-bounds"
 
