@@ -271,21 +271,21 @@ impl<'a> WaniKaniAPIClient<'a> {
             let subject = match subject_type {
                 "radical" => match db.radical.get(&subject_id) {
                     Some(radical) => Subject::Radical(radical.clone()),
-                    None => bail!("Unknown radical: {}", &subject_id),
+                    None => bail!("Unknown radical: {}", subject_id),
                 },
                 "kanji" => match db.kanji.get(&subject_id) {
                     Some(kanji) => Subject::Kanji(kanji.clone()),
-                    None => bail!("Unknown kanji: {}", &subject_id),
+                    None => bail!("Unknown kanji: {}", subject_id),
                 },
                 "vocabulary" => match db.vocabulary.get(&subject_id) {
                     Some(vocabulary) => Subject::Vocabulary(vocabulary.clone()),
-                    None => bail!("Unknown vocabulary: {}", &subject_id),
+                    None => bail!("Unknown vocabulary: {}", subject_id),
                 },
                 "kana_vocabulary" => match db.kana_vocabulary.get(&subject_id) {
                     Some(kana_vocabulary) => Subject::KanaVocabulary(kana_vocabulary.clone()),
-                    None => bail!("Unknown kana_vocabulary: {}", &subject_id),
+                    None => bail!("Unknown kana_vocabulary: {}", subject_id),
                 },
-                _ => bail!("Unknown subject type: {}", &subject_type),
+                _ => bail!("Unknown subject type: {}", subject_type),
             };
 
             results.push(Assignment {
