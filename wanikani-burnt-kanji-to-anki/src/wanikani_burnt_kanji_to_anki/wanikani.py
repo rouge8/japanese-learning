@@ -72,7 +72,7 @@ class WaniKaniAPIClient:
             resp = self._request(next_url, params)
             resp = resp.json()
 
-            next_url = resp["pages"]["next_url"]
+            next_url: str = resp["pages"]["next_url"]
             if next_url is not None:
                 next_url = next_url.split(f"{self.base_url}/", 1)[1]
                 # next_url contains the query parameters
