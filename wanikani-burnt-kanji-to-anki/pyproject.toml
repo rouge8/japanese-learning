@@ -22,7 +22,6 @@ dependencies = [
 [dependency-groups]
 dev = [
     "coverage~=7.11.0",
-    "mypy~=2.1.0",
     "pytest~=9.0.1",
     "pytest-cov~=7.0.0",
     "pytest-randomly~=4.0.1",
@@ -30,6 +29,7 @@ dev = [
     "faker~=37.8.0",
     "pytest-mock~=3.15.1",
     "falcon~=4.2.0",
+    "pyrefly==1.2.0.dev2",
 ]
 
 [project.scripts]
@@ -50,10 +50,8 @@ addopts = [
   "--strict-markers",
 ]
 
-[tool.mypy]
-strict = true
-allow_redefinition = true
-warn_unreachable = true
+[tool.pyrefly]
+preset = "strict"
 
 [tool.ruff.lint.isort]
 known-first-party = ["wanikani_burnt_kanji_to_anki"]

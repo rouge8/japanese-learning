@@ -19,7 +19,7 @@ class TestExactlyOne:
 
     def test_zero(self) -> None:
         with pytest.raises(AssertionError):
-            exactly_one([])
+            exactly_one([])  # pyrefly:ignore[implicit-any-empty-container]
 
     def test_many(self) -> None:
         with pytest.raises(AssertionError):

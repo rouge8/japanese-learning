@@ -23,7 +23,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "coverage==7.13.5",
-    "mypy==2.1.0",
+    "pyrefly==1.2.0.dev2",
     "pytest==9.0.3",
     "pytest-cov==7.1.0",
     "pytest-mock==3.15.1",
@@ -50,10 +50,8 @@ addopts = [
   "--strict-markers",
 ]
 
-[tool.mypy]
-strict = true
-allow_redefinition = true
-warn_unreachable = true
+[tool.pyrefly]
+preset = "strict"
 
 [tool.ruff.lint.isort]
 known-first-party = ["shirabe_jisho_to_anki"]

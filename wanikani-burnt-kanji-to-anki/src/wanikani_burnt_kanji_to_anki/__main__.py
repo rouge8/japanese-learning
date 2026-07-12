@@ -7,6 +7,7 @@ import structlog
 
 from wanikani_burnt_kanji_to_anki.wanikani import UnknownKanjiError
 from wanikani_burnt_kanji_to_anki.wanikani import WaniKaniAPIClient
+from wanikani_burnt_kanji_to_anki.wanikani import Kanji
 
 log = structlog.get_logger()
 
@@ -53,7 +54,7 @@ def csv(
     if additional_kanji is not None:
         for line in additional_kanji:
             try:
-                kanji = ctx.obj.api.get_kanji(line.strip())
+                kanji: Kanji = ctx.obj.api.get_kanji(line.strip())
             except UnknownKanjiError:
                 log.error("Unknown kanji", kanji=line.strip())
                 continue
