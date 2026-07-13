@@ -1,6 +1,6 @@
 [tools]
 rust = "stable"
-"cargo:cargo-nextest" = "latest"
+"aqua:nextest-rs/nextest/cargo-nextest" = "latest"
 flyctl = "latest"
 
 [tasks.setup]
