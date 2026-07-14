@@ -52,16 +52,16 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "anki", specifier = "==26.5" },
-    { name = "click", specifier = "~=8.3.0" },
+    { name = "click", specifier = "==8.3.3" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "coverage", specifier = "~=7.11.0" },
+    { name = "coverage", specifier = "==7.11.3" },
     { name = "pyrefly", specifier = "==1.2.0.dev2" },
-    { name = "pytest", specifier = "~=9.0.1" },
-    { name = "pytest-cov", specifier = "~=7.0.0" },
-    { name = "pytest-randomly", specifier = "~=4.0.1" },
+    { name = "pytest", specifier = "==9.0.3" },
+    { name = "pytest-cov", specifier = "==7.0.0" },
+    { name = "pytest-randomly", specifier = "==4.0.1" },
 ]
 
 [[package]]

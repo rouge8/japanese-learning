@@ -292,21 +292,21 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "attrs", specifier = "~=26.1.0" },
-    { name = "click", specifier = "~=8.3.0" },
+    { name = "attrs", specifier = "==26.1.0" },
+    { name = "click", specifier = "==8.3.3" },
     { name = "pyreqwest", specifier = "==0.12.0" },
-    { name = "structlog", specifier = "~=25.5.0" },
+    { name = "structlog", specifier = "==25.5.0" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "coverage", specifier = "~=7.11.0" },
-    { name = "factory-boy", specifier = "~=3.3.3" },
-    { name = "faker", specifier = "~=37.8.0" },
-    { name = "falcon", specifier = "~=4.2.0" },
+    { name = "coverage", specifier = "==7.11.3" },
+    { name = "factory-boy", specifier = "==3.3.3" },
+    { name = "faker", specifier = "==37.8.0" },
+    { name = "falcon", specifier = "==4.2.0" },
     { name = "pyrefly", specifier = "==1.2.0.dev2" },
-    { name = "pytest", specifier = "~=9.0.1" },
-    { name = "pytest-cov", specifier = "~=7.0.0" },
-    { name = "pytest-mock", specifier = "~=3.15.1" },
-    { name = "pytest-randomly", specifier = "~=4.0.1" },
+    { name = "pytest", specifier = "==9.0.3" },
+    { name = "pytest-cov", specifier = "==7.0.0" },
+    { name = "pytest-mock", specifier = "==3.15.1" },
+    { name = "pytest-randomly", specifier = "==4.0.1" },
 ]
