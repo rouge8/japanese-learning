@@ -22,7 +22,7 @@ dev = [
     "pyrefly==1.2.0.dev2",
     "pytest==9.1.1",
     "pytest-cov==7.1.0",
-    "pytest-randomly==4.0.1",
+    "pytest-randomly==4.1.0",
 ]
 
 [project.scripts]
