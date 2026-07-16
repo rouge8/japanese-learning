@@ -16,7 +16,7 @@ dependencies = [
   "anki==26.5",
   "attrs==26.1.0",
   "click==8.3.2",
-  "lxml==6.1.0",
+  "lxml==6.1.1",
   "structlog==25.5.0",
 ]
 
