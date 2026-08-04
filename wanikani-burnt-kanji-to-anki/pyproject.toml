@@ -29,7 +29,7 @@ dev = [
     "faker==40.28.1",
     "pytest-mock==3.15.1",
     "falcon==4.2.0",
-    "pyrefly==1.2.0.dev2",
+    "pyrefly==1.2.0.dev3",
 ]
 
 [project.scripts]
