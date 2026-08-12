@@ -13,7 +13,7 @@ dynamic = ["version", "description"]
 requires-python = "~=3.14.0"
 
 dependencies = [
-  "anki==26.8",
+  "anki==26.8.1",
   "attrs==26.1.0",
   "click==8.4.2",
   "lxml==6.1.1",
