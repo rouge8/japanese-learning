@@ -1,14 +1,11 @@
 import io
 
-from anki.collection import Collection
 import click
+from anki.collection import Collection
 from structlog.stdlib import get_logger
 
-from .anki import Deck
-from .anki import Note
-from .jmdict import EntryNotFound
-from .jmdict import JMDict
-from .jmdict import MultipleEntriesForBookmark
+from .anki import Deck, Note
+from .jmdict import EntryNotFound, JMDict, MultipleEntriesForBookmark
 from .shirabe_jisho import Bookmark
 
 logger = get_logger()

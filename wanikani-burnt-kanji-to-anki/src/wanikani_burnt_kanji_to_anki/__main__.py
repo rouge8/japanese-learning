@@ -5,9 +5,11 @@ import attrs
 import click
 import structlog
 
-from wanikani_burnt_kanji_to_anki.wanikani import UnknownKanjiError
-from wanikani_burnt_kanji_to_anki.wanikani import WaniKaniAPIClient
-from wanikani_burnt_kanji_to_anki.wanikani import Kanji
+from wanikani_burnt_kanji_to_anki.wanikani import (
+    Kanji,
+    UnknownKanjiError,
+    WaniKaniAPIClient,
+)
 
 log = structlog.get_logger()
 

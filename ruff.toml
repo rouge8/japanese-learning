@@ -40,7 +40,6 @@ ignore = [
 allowed-confusables = ["（", "）"]
 
 [lint.isort]
-force-single-line = true
 force-sort-within-sections = true
 order-by-type = false
 

@@ -1,9 +1,8 @@
-from anki.decks import DeckId
 import pytest
+from anki.decks import DeckId
 from pytest_mock import MockerFixture
 
-from shirabe_jisho_to_anki.anki import Deck
-from shirabe_jisho_to_anki.anki import Note
+from shirabe_jisho_to_anki.anki import Deck, Note
 from shirabe_jisho_to_anki.jmdict import Entry
 
 

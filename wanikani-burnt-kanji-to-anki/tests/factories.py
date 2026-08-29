@@ -3,8 +3,7 @@ from typing import ClassVar
 import factory
 import factory.fuzzy
 
-from wanikani_burnt_kanji_to_anki.wanikani import _KANJI
-from wanikani_burnt_kanji_to_anki.wanikani import Kanji
+from wanikani_burnt_kanji_to_anki.wanikani import _KANJI, Kanji
 
 
 class KanjiFactory(factory.Factory):

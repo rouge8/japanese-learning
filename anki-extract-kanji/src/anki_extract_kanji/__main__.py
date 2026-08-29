@@ -1,9 +1,9 @@
-from collections.abc import Iterable
 import re
-
-from anki.collection import Collection
 from collections import Counter
+from collections.abc import Iterable
+
 import click
+from anki.collection import Collection
 
 
 def unknown_kanji(known_kanji: set[str], vocab: Iterable[str]) -> Counter[str]:

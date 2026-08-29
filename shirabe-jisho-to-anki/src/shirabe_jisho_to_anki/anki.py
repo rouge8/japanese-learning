@@ -4,9 +4,7 @@ from typing import Self
 from anki.collection import Collection
 from anki.decks import DeckId
 from anki.models import NotetypeDict
-from attrs import define
-from attrs import field
-from attrs import frozen
+from attrs import define, field, frozen
 
 from .helpers import not_none
 from .jmdict import Entry as JMDictEntry

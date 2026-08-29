@@ -1,14 +1,15 @@
 import faker
 import pytest
 
-from wanikani_burnt_kanji_to_anki.wanikani import _KANJI
-from wanikani_burnt_kanji_to_anki.wanikani import Kanji
-from wanikani_burnt_kanji_to_anki.wanikani import UnknownKanjiError
-from wanikani_burnt_kanji_to_anki.wanikani import WaniKaniAPIClient
+from wanikani_burnt_kanji_to_anki.wanikani import (
+    _KANJI,
+    Kanji,
+    UnknownKanjiError,
+    WaniKaniAPIClient,
+)
 
 from .factories import KanjiFactory
-from .mock_wanikani import KanjiPage
-from .mock_wanikani import MockWaniKaniAPI
+from .mock_wanikani import KanjiPage, MockWaniKaniAPI
 
 
 class TestWaniKaniAPIClient:

@@ -1,11 +1,8 @@
 from functools import cached_property
 from typing import Any
 
-from attrs import define
-from attrs import Factory
-from falcon import App
-from falcon import Request
-from falcon import Response
+from attrs import Factory, define
+from falcon import App, Request, Response
 
 
 @define
@@ -30,7 +27,7 @@ class _KanjiSubjectResource:
         page_after_id = req.get_param("page_after_id")
         page = self.kanji_pages[page_after_id]
         if page.next_page_after_id:
-            next_page_url = f"{self.base_url}/subjects?types=kanji&hidden=false&page_after_id={page.next_page_after_id}"  # noqa: E501
+            next_page_url = f"{self.base_url}/subjects?types=kanji&hidden=false&page_after_id={page.next_page_after_id}"
         else:
             next_page_url = None
 

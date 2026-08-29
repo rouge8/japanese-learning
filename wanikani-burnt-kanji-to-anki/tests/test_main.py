@@ -1,11 +1,10 @@
 import csv
-from functools import partial
 import io
+from functools import partial
 from pathlib import Path
 
-from click.testing import CliRunner
-from click.testing import Result
 import pytest
+from click.testing import CliRunner, Result
 from pytest_mock import MockerFixture
 
 from .factories import KanjiFactory

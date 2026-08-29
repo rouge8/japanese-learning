@@ -1,11 +1,13 @@
 import pytest
 from pytest_unordered import unordered
 
-from shirabe_jisho_to_anki.jmdict import Entry
-from shirabe_jisho_to_anki.jmdict import EntryNotFound
-from shirabe_jisho_to_anki.jmdict import JMDict
-from shirabe_jisho_to_anki.jmdict import MultipleEntriesForBookmark
-from shirabe_jisho_to_anki.jmdict import Sense
+from shirabe_jisho_to_anki.jmdict import (
+    Entry,
+    EntryNotFound,
+    JMDict,
+    MultipleEntriesForBookmark,
+    Sense,
+)
 from shirabe_jisho_to_anki.shirabe_jisho import Bookmark
 
 EMPTY_SENSES = (

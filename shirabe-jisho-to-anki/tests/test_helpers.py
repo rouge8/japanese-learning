@@ -1,7 +1,6 @@
 import pytest
 
-from shirabe_jisho_to_anki.helpers import exactly_one
-from shirabe_jisho_to_anki.helpers import not_none
+from shirabe_jisho_to_anki.helpers import exactly_one, not_none
 
 
 class TestNotNone:

@@ -1,11 +1,11 @@
-from pyreqwest.response import SyncResponse
-from collections.abc import Iterable
 import time
 import typing
+from collections.abc import Iterable
 
 import attrs
 import structlog
 from pyreqwest.client import SyncClient, SyncClientBuilder
+from pyreqwest.response import SyncResponse
 
 log = structlog.get_logger()
 

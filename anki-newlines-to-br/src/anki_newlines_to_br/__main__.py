@@ -1,5 +1,5 @@
-from anki.collection import Collection
 import click
+from anki.collection import Collection
 from structlog.stdlib import get_logger
 
 from .anki import Deck

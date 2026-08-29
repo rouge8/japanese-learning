@@ -1,4 +1,5 @@
 from collections import Counter
+
 from anki_extract_kanji.__main__ import unknown_kanji
 
 

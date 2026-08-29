@@ -1,9 +1,8 @@
 # Resolve circular imports by importing the Anki collection early
-from anki.collection import Collection  # noqa: F401
 import pytest
+from anki.collection import Collection  # noqa: F401
 
-from shirabe_jisho_to_anki.jmdict import Entry
-from shirabe_jisho_to_anki.jmdict import Sense
+from shirabe_jisho_to_anki.jmdict import Entry, Sense
 
 
 @pytest.fixture

@@ -1,17 +1,12 @@
+import itertools
 from collections import defaultdict
 from collections.abc import Iterator
-import itertools
-from typing import Literal
-from typing import Self
+from typing import Literal, Self
 
-from attrs import define
-from attrs import Factory
-from attrs import frozen
-from lxml.etree import Element
-from lxml.etree import iterparse
+from attrs import Factory, define, frozen
+from lxml.etree import Element, iterparse
 
-from .helpers import exactly_one
-from .helpers import not_none
+from .helpers import exactly_one, not_none
 from .jp_helpers import godan_verb_to_masu_form
 from .shirabe_jisho import Bookmark
 
