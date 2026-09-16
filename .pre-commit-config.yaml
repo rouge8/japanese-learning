@@ -133,3 +133,9 @@ repos:
               (cd "${d}" && cargo +stable clippy -- -D warnings)
             done
           '
+      - id: mise-fmt
+        name: mise fmt
+        language: system
+        types: [toml]
+        pass_filenames: false
+        entry: mise fmt

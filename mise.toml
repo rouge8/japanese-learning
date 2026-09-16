@@ -21,16 +21,11 @@ prek = "latest"
 
 [tasks.setup]
 depends = "//...:setup"
-run = [
-  "prek install",
-]
+run = ["prek install"]
 
 [tasks.upgrade-deps]
 depends = "//...:upgrade-deps"
-run = [
-  "prek update",
-  "gha-update",
-]
+run = ["prek update", "gha-update"]
 
 [tasks.test]
 depends = "//...:test"
