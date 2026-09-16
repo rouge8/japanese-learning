@@ -394,19 +394,11 @@ async fn main() -> reqwest::Result<()> {
     };
 
     // Configure Sentry
-    let mut opts = sentry::apply_defaults(sentry::ClientOptions {
-        release: Some(
-            config
-                .sentry_release
-                .clone()
-                .unwrap_or(
-                    git_version!(args = ["--always", "--abbrev=40"], fallback = "UNKNOWN")
-                        .to_string(),
-                )
-                .into(),
+    let mut opts = sentry::apply_defaults(sentry::ClientOptions::new().release(
+        config.sentry_release.clone().unwrap_or(
+            git_version!(args = ["--always", "--abbrev=40"], fallback = "UNKNOWN").to_string(),
         ),
-        ..Default::default()
-    });
+    ));
     // Disable debug-images: it conflicts with the 'debug = 1' rustc build option:
     // https://github.com/getsentry/sentry-rust/issues/574
     opts.integrations.retain(|i| i.name() != "debug-images");
