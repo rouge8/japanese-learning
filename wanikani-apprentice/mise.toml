@@ -1,5 +1,5 @@
 [tools]
-rust = "stable"
+rust = "1.98.1"
 "aqua:nextest-rs/nextest/cargo-nextest" = "latest"
 flyctl = "latest"
 
