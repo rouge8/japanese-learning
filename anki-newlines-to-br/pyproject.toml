@@ -15,7 +15,7 @@ requires-python = "==3.14.7"
 dependencies = [
   "anki==26.9.2",
   "attrs==26.1.0",
-  "click==8.4.2",
+  "click==8.5.0",
   "structlog==26.1.0",
 ]
 
