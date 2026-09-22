@@ -5,5 +5,8 @@
     "helpers:pinGitHubActionDigests"
   ],
   "minimumReleaseAge": "7 days",
-  "rangeStrategy": "pin"
+  "rangeStrategy": "pin",
+  "pre-commit": {
+    "enabled": true
+  }
 }
