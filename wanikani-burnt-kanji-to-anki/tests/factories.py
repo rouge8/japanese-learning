@@ -1,18 +1,45 @@
+from collections.abc import Callable
 from typing import ClassVar
 
-import factory
-import factory.fuzzy
+from polyfactory import SyncPersistenceProtocol, Use
+from polyfactory.factories.attrs_factory import AttrsFactory
 
 from wanikani_burnt_kanji_to_anki.wanikani import _KANJI, Kanji
 
 
-class KanjiFactory(factory.Factory):
-    class Meta:
-        model = Kanji
+def make_sequence(start: int = 1) -> Callable[[], int]:
+    count = start
 
-    id = factory.Sequence(lambda n: n)
-    document_url = factory.Faker("url")
-    characters = factory.Sequence(lambda n: str(n))
+    def next_val() -> int:
+        nonlocal count
+        val = count
+        count += 1
+        return val
+
+    return next_val
+
+
+id_sequence = make_sequence(1)
+character_sequence = make_sequence(1)
+
+
+class KanjiPersistenceHandler(SyncPersistenceProtocol[Kanji]):
+    def save(self, data: Kanji) -> Kanji:
+        _KANJI[data.id] = data
+        return data
+
+    def save_many(self, data: list[Kanji]) -> list[Kanji]:
+        for d in data:
+            _KANJI[d.id] = d
+        return data
+
+
+class KanjiFactory(AttrsFactory[Kanji]):
+    __sync_persistence__ = KanjiPersistenceHandler
+
+    id = Use(id_sequence)
+    document_url = AttrsFactory.__faker__.url
+    characters = Use(lambda: str(character_sequence()))
     meanings: ClassVar[list[str]] = [
         "meaning1",
         "meaning2",
@@ -21,11 +48,3 @@ class KanjiFactory(factory.Factory):
         "readings1",
         "readings2",
     ]
-
-    @classmethod
-    def _create(cls, model_class, *args, **kwargs):
-        instance = model_class(*args, **kwargs)
-
-        _KANJI[instance.id] = instance
-
-        return instance

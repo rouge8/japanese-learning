@@ -80,7 +80,7 @@ class TestWaniKaniAPIClient:
         faker: faker.Faker,
         mock_wanikani: MockWaniKaniAPI,
     ) -> None:
-        expected_kanji = KanjiFactory.create_batch(faker.random_int(min=3, max=10))
+        expected_kanji = KanjiFactory.create_batch_sync(faker.random_int(min=3, max=10))
 
         assignments = [
             {
@@ -96,13 +96,13 @@ class TestWaniKaniAPIClient:
         assert list(api_client.burnt_kanji()) == expected_kanji
 
     def test_get_kanji(self, api_client: WaniKaniAPIClient) -> None:
-        random_kanji = KanjiFactory.create_batch(5)
+        random_kanji = KanjiFactory.create_batch_sync(5)
 
         for kanji in random_kanji:
             assert api_client.get_kanji(kanji.characters) == kanji
 
     def test_get_kanji_unknown_kanji(self, api_client: WaniKaniAPIClient) -> None:
-        random_kanji = KanjiFactory.create()
+        random_kanji = KanjiFactory.create_sync()
 
         with pytest.raises(UnknownKanjiError):
             api_client.get_kanji(random_kanji.characters + "OHNO")

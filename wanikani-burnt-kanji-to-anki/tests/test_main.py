@@ -24,10 +24,10 @@ def test_csv(
     mocker: MockerFixture,
     tmp_path: Path,
 ) -> None:
-    expected_kanji = KanjiFactory.build_batch(5)
+    expected_kanji = [KanjiFactory.build() for _ in range(5)]
 
     if has_additional_kanji:
-        additional_kanji = KanjiFactory.create_batch(2)
+        additional_kanji = KanjiFactory.create_batch_sync(2)
         additional_kanji_file = tmp_path / "more-kanji.txt"
         with open(additional_kanji_file, "w") as f:
             for kanji in additional_kanji:
