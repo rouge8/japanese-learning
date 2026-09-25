@@ -12,7 +12,7 @@ pyrefly = { timestamp = "0001-01-01T00:00:00Z", span = "PT1H" }
 
 [[package]]
 name = "anki"
-version = "26.9.2"
+version = "26.9.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "decorator" },
@@ -24,12 +24,12 @@ dependencies = [
     { name = "typing-extensions" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/61/68/f19a0d856ce98709b7069d1816fb6c2dc6748a03d54d023f91eac2276606/anki-26.9.2-cp310-abi3-macosx_12_0_arm64.whl", hash = "sha256:a29f9df136dadf047e8fbceb0e2b5d38f203c21b1916f492d0701c8a503f597f", size = 9202360, upload-time = "2026-09-15T21:21:30.706Z" },
-    { url = "https://files.pythonhosted.org/packages/f7/b5/e0069533f1a3f779519bb905546e0706f5ae4a912a114c520e8ea5d98e3f/anki-26.9.2-cp310-abi3-macosx_12_0_x86_64.whl", hash = "sha256:18e686a143e60a28e9a7b200d06c673b4ae838caf83a8e6f6983dd007b7741fc", size = 9621201, upload-time = "2026-09-15T21:21:32.991Z" },
-    { url = "https://files.pythonhosted.org/packages/0d/1a/24a691862dac680a2e787a281127f9d1589138049cf463625ca53848efb3/anki-26.9.2-cp310-abi3-manylinux_2_35_aarch64.whl", hash = "sha256:b1ab9a093412593ef10be36ce6bf2309f65ad14c83256fd6e6a68217f932a840", size = 10499248, upload-time = "2026-09-15T21:21:35.437Z" },
-    { url = "https://files.pythonhosted.org/packages/99/a1/b351db3b5f94764f29cc9813a26dab1e729a5ec0e7bf8bce065bdea79ec4/anki-26.9.2-cp310-abi3-manylinux_2_35_x86_64.whl", hash = "sha256:63f792964e1a7bd6a9a4f4a0603469587ef1a61c3d2d49ff3eb7812e5b8c1a08", size = 10795499, upload-time = "2026-09-15T21:21:37.56Z" },
-    { url = "https://files.pythonhosted.org/packages/32/9f/11926de8f7e063fd2c04f23e92684bac7c161f82c6b24e9fc78e5618c709/anki-26.9.2-cp310-abi3-win_amd64.whl", hash = "sha256:644d37401af95b47c20139486b35da0b773c6ea2674c35099eb6334041c09b66", size = 9500095, upload-time = "2026-09-15T21:21:39.713Z" },
-    { url = "https://files.pythonhosted.org/packages/87/6c/716c5e4cf48e6f161bd640df6b3cfebc4457bf21c31a13ea554809b1f753/anki-26.9.2-cp310-abi3-win_arm64.whl", hash = "sha256:671a892639db1927e3fdd4bfbee5861605c054c83c2301fa70f15a0b86447f02", size = 8973714, upload-time = "2026-09-15T21:21:41.944Z" },
+    { url = "https://files.pythonhosted.org/packages/c9/fb/0c80b6973b9febcf1bd39a641b1c4f9810c39d9879272d7e0b92d78240af/anki-26.9.3-cp310-abi3-macosx_12_0_arm64.whl", hash = "sha256:99e7d706ff21c7feeb81b94c87e5539e91167fec8d4c5da387e17fe010df6062", size = 9204193, upload-time = "2026-09-23T15:19:48.42Z" },
+    { url = "https://files.pythonhosted.org/packages/70/32/25eed96b74a0e10359610dab3eb986b6f80a4db26b3364739813370767a3/anki-26.9.3-cp310-abi3-macosx_12_0_x86_64.whl", hash = "sha256:a55f3fe495e39aa208982b0bf5f08f0bab13f4a55f4003c7ef83fc3009f7f257", size = 9623325, upload-time = "2026-09-23T15:19:51.251Z" },
+    { url = "https://files.pythonhosted.org/packages/36/34/40c929f171cdc7d6d3d9c93e557ee63ba8b64cb99b8b7d102cc7eda88750/anki-26.9.3-cp310-abi3-manylinux_2_35_aarch64.whl", hash = "sha256:d994c996dcb5a619049291d829500f5bb0bbae5fe36058f1d43daadd59b5b804", size = 10508154, upload-time = "2026-09-23T15:19:53.832Z" },
+    { url = "https://files.pythonhosted.org/packages/e1/dc/585eee290ff22d3ea0a7067e16aa27bd9d1f4dbf8aee9397255eed8d3376/anki-26.9.3-cp310-abi3-manylinux_2_35_x86_64.whl", hash = "sha256:7b3dcb6c9e06e8087ed66bb70f35356e5c60686f51e3bde25f6328433072132f", size = 10797506, upload-time = "2026-09-23T15:19:56.03Z" },
+    { url = "https://files.pythonhosted.org/packages/a5/f6/b5488a1ff13079e3c95e0054c4339daebc29edfd90a673554c8cb3d9be89/anki-26.9.3-cp310-abi3-win_amd64.whl", hash = "sha256:0ef53cf0da16df057041e412aaad0bf049f036867bb5d8185add1de159099800", size = 9502126, upload-time = "2026-09-23T15:19:58.726Z" },
+    { url = "https://files.pythonhosted.org/packages/54/89/2c17441ba2a2840b32ee1070b86dd9d4b6885f4bee687e2bbcf2afc6cb45/anki-26.9.3-cp310-abi3-win_arm64.whl", hash = "sha256:7b4cb3b75154f44e603292eccb61af3725dca7f19d7b49d95be7fd0d599097a2", size = 8975900, upload-time = "2026-09-23T15:20:01.387Z" },
 ]
 
 [[package]]
@@ -51,7 +51,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "anki", specifier = "==26.9.2" },
+    { name = "anki", specifier = "==26.9.3" },
     { name = "click", specifier = "==8.5.0" },
 ]
 
