@@ -50,6 +50,7 @@ addopts = [
 
 [tool.pyrefly]
 preset = "strict"
+enable-fallback-search-path = true
 
 [tool.ruff.lint.isort]
 known-first-party = ["anki_newlines_to_br"]

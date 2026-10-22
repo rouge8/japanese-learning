@@ -7,6 +7,8 @@ import pytest
 from click.testing import CliRunner, Result
 from pytest_mock import MockerFixture
 
+from wanikani_burnt_kanji_to_anki.wanikani import Kanji
+
 from .factories import KanjiFactory
 
 
@@ -25,6 +27,7 @@ def test_csv(
     tmp_path: Path,
 ) -> None:
     expected_kanji = [KanjiFactory.build() for _ in range(5)]
+    additional_kanji: list[Kanji]
 
     if has_additional_kanji:
         additional_kanji = KanjiFactory.create_batch_sync(2)
@@ -43,7 +46,7 @@ def test_csv(
 
     args = ["--wanikani-api-key=fake-key", "csv"]
     if has_additional_kanji:
-        args += ["--additional-kanji", str(additional_kanji_file)]
+        args += ["--additional-kanji", str(additional_kanji_file)]  # pyrefly: ignore[unbound-name]
 
     result = cli(args)
 

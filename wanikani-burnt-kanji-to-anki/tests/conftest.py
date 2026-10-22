@@ -21,7 +21,7 @@ def mock_wanikani(base_url: str) -> MockWaniKaniAPI:
 def api_client(base_url: str, mock_wanikani: MockWaniKaniAPI) -> WaniKaniAPIClient:
     """A WaniKaniAPIClient"""
 
-    middleware = WSGITestMiddleware(mock_wanikani.app)
+    middleware = WSGITestMiddleware(mock_wanikani.app)  # pyrefly: ignore[bad-argument-type]
     with SyncClientBuilder().with_middleware(middleware).build() as client:
         return WaniKaniAPIClient(
             "fake-key",

@@ -52,6 +52,7 @@ addopts = [
 
 [tool.pyrefly]
 preset = "strict"
+enable-fallback-search-path = true
 
 [tool.ruff.lint.isort]
 known-first-party = ["wanikani_burnt_kanji_to_anki"]

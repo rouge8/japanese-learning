@@ -45,6 +45,7 @@ addopts = [
 
 [tool.pyrefly]
 preset = "strict"
+enable-fallback-search-path = true
 
 [tool.ruff.lint.isort]
 known-first-party = ["anki_extract_kanji"]

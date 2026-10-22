@@ -59,7 +59,7 @@ class TestWaniKaniAPIClient:
                     for meaning in k["data"]["meanings"]
                     if meaning["accepted_answer"]
                 ],
-                readings=[
+                readings=[  # pyrefly: ignore[bad-argument-type]
                     reading["reading"]
                     for reading in k["data"]["readings"]
                     if reading["primary"] or reading["accepted_answer"]
