@@ -25,7 +25,7 @@ dev = [
     "pytest==9.2.0",
     "pytest-cov==7.1.0",
     "pytest-randomly==5.0.0",
-    "faker==40.28.1",
+    "faker==40.44.0",
     "pytest-mock==3.17.0",
     "falcon==4.4.0",
     "pyrefly==1.4.1",
