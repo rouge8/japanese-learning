@@ -57,9 +57,11 @@ jobs:
               - 'wanikani-apprentice/**'
       - name: Extract Python project names
         id: projects
+        env:
+          PYTHON_FILES: ${{ steps.filter.outputs.python_files }}
         run: |
           set -ex
-          echo '${{ steps.filter.outputs.python_files }}' | jq -c 'map(split("/")[0]) | unique' > projects.json
+          echo "$PYTHON_FILES" | jq -c 'map(split("/")[0]) | unique' > projects.json
           echo "python=$(cat projects.json)" >> $GITHUB_OUTPUT
 
   python:
