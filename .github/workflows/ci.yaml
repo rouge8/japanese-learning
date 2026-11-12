@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
-      - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d  # v4.0.1
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d  # v4.0.3
         id: filter
         with:
           list-files: json
@@ -57,9 +57,11 @@ jobs:
               - 'wanikani-apprentice/**'
       - name: Extract Python project names
         id: projects
+        env:
+          PYTHON_FILES: ${{ steps.filter.outputs.python_files }}
         run: |
           set -ex
-          echo '${{ steps.filter.outputs.python_files }}' | jq -c 'map(split("/")[0]) | unique' > projects.json
+          echo "$PYTHON_FILES" | jq -c 'map(split("/")[0]) | unique' > projects.json
           echo "python=$(cat projects.json)" >> $GITHUB_OUTPUT
 
   python:
