@@ -29,7 +29,7 @@ dev = [
     "pytest-mock==3.17.0",
     "falcon==4.4.0",
     "pyrefly==1.4.1",
-    "polyfactory==3.3.0",
+    "polyfactory==3.5.0",
 ]
 
 [project.scripts]
