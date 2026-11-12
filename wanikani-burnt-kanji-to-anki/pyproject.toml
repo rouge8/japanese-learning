@@ -15,7 +15,7 @@ requires-python = "==3.15.2"
 dependencies = [
   "attrs==26.1.0",
   "click==8.5.0",
-  "pyreqwest==0.15.0",
+  "pyreqwest==0.15.1",
   "structlog==26.1.0",
 ]
 
