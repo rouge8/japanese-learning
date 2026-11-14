@@ -14,8 +14,8 @@ jobs:
     name: prek
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
       - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772  # v1
         with:
           toolchain: 1.98.1
@@ -24,14 +24,14 @@ jobs:
         with:
           toolchain: nightly-2026-09-15
           components: rustfmt
-      - uses: jdx/mise-action@f5be966e4a917d54244728e6a5fdcd1d93a35e6c  # v5.2.6
+      - uses: jdx/mise-action@v5.2.6
         with:
           install: false
-      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4  # v2.9.1
+      - uses: Swatinem/rust-cache@v2.9.1
         with:
           workspaces: |
             wanikani-apprentice
-      - uses: j178/prek-action@4e14d07f9231acabce116ccfca13b13dd9755ece  # v3.0.0
+      - uses: j178/prek-action@v3.0.0
 
   files-changed:
     name: Detect which files changed
@@ -42,8 +42,8 @@ jobs:
       wanikani-apprentice: ${{ steps.filter.outputs.wanikani-apprentice }}
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
-      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d  # v4.0.3
+      - uses: actions/checkout@v7.0.1
+      - uses: dorny/paths-filter@v4.0.3
         id: filter
         with:
           list-files: json
@@ -81,15 +81,15 @@ jobs:
           - pyrefly
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: actions/checkout@v7.0.1
       - name: Generate the cache suffix
         id: cache-suffix
         run: |
           echo cache-suffix=${TOXENV//,/-} >> $GITHUB_OUTPUT
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
+      - uses: actions/setup-python@v7.1.0
         with:
           python-version-file: ${{ matrix.project }}/pyproject.toml
-      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2  # v10.3.3
+      - uses: astral-sh/setup-uv@v10.3.3
         with:
           working-directory: ${{ matrix.project }}
           cache-suffix: ${{ steps.cache-suffix.outputs.cache-suffix }}
@@ -103,27 +103,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: actions/checkout@v7.0.1
       - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772  # v1
         with:
           toolchain: 1.98.1
           components: llvm-tools-preview
       - name: Install cargo-llvm-cov
-        uses: taiki-e/install-action@16b05812d776ae1dfaabc8277e421fb6d2506419  # v2.82.7
+        uses: taiki-e/install-action@v2.82.7
         with:
           tool: cargo-llvm-cov
       - name: Install cargo-nextest
-        uses: taiki-e/install-action@16b05812d776ae1dfaabc8277e421fb6d2506419  # v2.82.7
+        uses: taiki-e/install-action@v2.82.7
         with:
           tool: cargo-nextest
-      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4  # v2.9.1
+      - uses: Swatinem/rust-cache@v2.9.1
         with:
           workspaces: |
             wanikani-apprentice
       - name: Run tests
         run: cd wanikani-apprentice && cargo llvm-cov nextest --no-fail-fast --html --color=always
       - name: Upload HTML coverage report
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: coverage-report
           path: wanikani-apprentice/target/llvm-cov/html
