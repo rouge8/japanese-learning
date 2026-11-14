@@ -1,6 +1,7 @@
+from collections.abc import Generator
+
+import httpx2
 import pytest
-from pyreqwest.client import SyncClientBuilder
-from pyreqwest.middleware.wsgi import WSGITestMiddleware
 
 from wanikani_burnt_kanji_to_anki.wanikani import WaniKaniAPIClient
 
@@ -18,12 +19,14 @@ def mock_wanikani(base_url: str) -> MockWaniKaniAPI:
 
 
 @pytest.fixture
-def api_client(base_url: str, mock_wanikani: MockWaniKaniAPI) -> WaniKaniAPIClient:
+def api_client(
+    base_url: str, mock_wanikani: MockWaniKaniAPI
+) -> Generator[WaniKaniAPIClient]:
     """A WaniKaniAPIClient"""
 
-    middleware = WSGITestMiddleware(mock_wanikani.app)  # pyrefly: ignore[bad-argument-type]
-    with SyncClientBuilder().with_middleware(middleware).build() as client:
-        return WaniKaniAPIClient(
+    transport = httpx2.WSGITransport(mock_wanikani.app)
+    with httpx2.Client(transport=transport) as client:
+        yield WaniKaniAPIClient(
             "fake-key",
             base_url=base_url,
             client=client,
