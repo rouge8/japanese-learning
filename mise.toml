@@ -2,11 +2,13 @@ monorepo_root = true
 
 [settings]
 minimum_release_age = "7d"
+locked = true
 
 [env]
 UV_PREVIEW_FEATURES = "add-bounds"
 
 [monorepo]
+lockfile = true
 config_roots = [
   "anki-extract-kanji",
   "anki-newlines-to-br",
