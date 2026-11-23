@@ -1,3 +1,4 @@
+use std::convert::Infallible;
 use std::fmt;
 use std::net::SocketAddr;
 
@@ -289,15 +290,12 @@ where
     type Rejection = (StatusCode, Redirect);
 
     async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
-        let jar = PrivateCookieJar::<Key>::from_request_parts(parts, state)
-            .await
-            .map_err(|err| err.into_response());
+        let Ok(jar) = PrivateCookieJar::<Key>::from_request_parts(parts, state).await;
 
-        if let Ok(jar) = jar {
-            if let Some(cookie) = jar.get(COOKIE_NAME) {
-                return Ok(WaniKaniAPIKey(cookie.value().to_string()));
-            }
+        if let Some(cookie) = jar.get(COOKIE_NAME) {
+            return Ok(WaniKaniAPIKey(cookie.value().to_string()));
         }
+
         Err((StatusCode::SEE_OTHER, Redirect::to("/login")))
     }
 }
@@ -307,22 +305,17 @@ where
     S: Send + Sync,
     Key: FromRef<S>,
 {
-    type Rejection = (StatusCode, Redirect);
+    type Rejection = Infallible;
 
     async fn from_request_parts(
         parts: &mut Parts,
         state: &S,
     ) -> Result<Option<Self>, Self::Rejection> {
-        let jar = PrivateCookieJar::<Key>::from_request_parts(parts, state)
-            .await
-            .map_err(|err| err.into_response());
+        let Ok(jar) = PrivateCookieJar::<Key>::from_request_parts(parts, state).await;
 
-        if let Ok(jar) = jar {
-            if let Some(cookie) = jar.get(COOKIE_NAME) {
-                return Ok(Some(WaniKaniAPIKey(cookie.value().to_string())));
-            }
-        }
-        Ok(None)
+        Ok(jar
+            .get(COOKIE_NAME)
+            .map(|cookie| WaniKaniAPIKey(cookie.value().to_string())))
     }
 }
 
